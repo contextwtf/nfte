@@ -34,5 +34,9 @@ export default async function handler(req, res) {
   const { styles } = css.getStyles(() => renderToStaticMarkup(Component()))
 
   res.setHeader("Content-Type", "text/javascript; charset=utf-8")
+  res.setHeader(
+    "Cache-Control",
+    "Cache-Control: s-maxage=120, stale-while-revalidate"
+  )
   res.status(200).send(embedScript(markup, styles))
 }
