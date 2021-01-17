@@ -4,7 +4,7 @@ import erc721ABI from "@utils/erc721ABI"
 export default async function eth({ contract, tokenId }) {
   const provider = new ethers.providers.InfuraProvider(
     null,
-    "5bfd326e230d4aef8533713af4531c1a"
+    process.env.INFURA_PROJECT_ID
   )
   const erc721 = new ethers.Contract(contract, erc721ABI, provider)
 
