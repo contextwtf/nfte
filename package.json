@@ -1,19 +1,13 @@
 {
-  "name": "nftmark",
-  "version": "1.0.0",
   "private": true,
-  "license": "GNU",
   "scripts": {
-    "start": "next start",
-    "build": "next build",
-    "dev": "next dev"
+    "dev": "lerna run dev --parallel"
   },
-  "dependencies": {
-    "@stitches/react": "^0.0.2",
-    "ethers": "^5.0.26",
-    "next": "^10.0.5",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-shadow": "^19.0.1"
+  "workspaces": [
+    "packages/*",
+    "demo"
+  ],
+  "devDependencies": {
+    "lerna": "^3.22.1"
   }
 }
