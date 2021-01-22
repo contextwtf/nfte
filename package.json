@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "lerna run dev --parallel",
     "build": "lerna run build",
-    "version": "lerna version",
+    "bump": "lerna version",
     "publish": "lerna publish"
   },
   "workspaces": [
