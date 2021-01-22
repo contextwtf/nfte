@@ -1,4 +1,4 @@
-import { NFTE } from "@nftmark/react"
+import { NFTE } from "@nfte/react"
 import Link from "next/link"
 import Box from "@components/Box"
 import CodeBlock from "@components/CodeBlock"

@@ -1,4 +1,4 @@
-import { css } from "../stitches.config"
+import { css } from "stitches.config"
 
 css.global({
   body: {
