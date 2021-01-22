@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server"
 import getNFTData from "@utils/getNFTData"
 import allowCORS from "@utils/allowCORS"
 
-import { NFTEmbed, css } from "@nftmark/react"
+import { NFTE, css } from "@nfte/react"
 
 function embedScript(markup, css) {
   return /*javascript*/ `
