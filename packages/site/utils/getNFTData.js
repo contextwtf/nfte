@@ -1,9 +1,10 @@
 import { ethers, BigNumber, utils } from "ethers"
-import { fromUnixTime, formatISO } from "date-fns"
+import { fromUnixTime, format } from "date-fns"
 import get from "lodash/get"
-import base32 from "base32"
-import erc721ABI from "docs/utils/erc721ABI"
-import platforms from "docs/utils/platforms"
+import erc721ABI from "@utils/erc721ABI"
+import platforms from "@utils/platforms"
+import isIPFS from "@utils/isIPFS"
+import makeIPFSUrl from "@utils/makeIPFSUrl"
 
 export default async function ({ contract, tokenId }) {
   const provider = new ethers.providers.CloudflareProvider()
@@ -42,20 +43,26 @@ export default async function ({ contract, tokenId }) {
     const [symbol, tokenURI, ownerOf, event] = promises
 
     const ownerEns = await provider.lookupAddress(ownerOf.value)
-
     const logs = await erc721Historical.queryFilter(event.value, 0)
     const creatorOf = logs[0].args.to
     const creatorEns = await provider.lookupAddress(creatorOf)
-
     const blockNumber = logs[0].blockNumber
     const timestamp = (await logs[0].getBlock()).timestamp
 
-    const r = await fetch(tokenURI.value)
+    const resolvedTokenURI = isIPFS(tokenURI.value)
+      ? makeIPFSUrl(tokenURI.value)
+      : tokenURI.value
+
+    const r = await fetch(resolvedTokenURI)
     const metadata = await r.json()
 
-    const platform = platforms.filter(
-      (p) => !p.addresses.includes(utils.getAddress(contract))
+    const platform = platforms.filter((p) =>
+      p.addresses.map(utils.getAddress).includes(utils.getAddress(contract))
     )[0]
+
+    const mediaUrl = get(metadata, platform?.mediaPath, null) ?? metadata.image
+
+    const resolvedMediaUrl = isIPFS(mediaUrl) ? makeIPFSUrl(mediaUrl) : mediaUrl
 
     return {
       contract,
@@ -68,9 +75,9 @@ export default async function ({ contract, tokenId }) {
         name: get(metadata, platform?.creatorNamePath, null),
       },
       symbol: symbol.value,
-      media: get(metadata, platform?.mediaPath, null),
+      media: resolvedMediaUrl,
       blockNumber,
-      timestamp: formatISO(fromUnixTime(timestamp)),
+      timestamp: format(fromUnixTime(timestamp), "dd/MM/yyyy HH:mm"),
       platform,
     }
   } catch (e) {

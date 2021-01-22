@@ -1,49 +1,24 @@
-import React, { useState, useEffect } from "react"
-import { css, cx } from "@emotion/css"
-import {
-  wrapper,
-  base,
-  text,
-  media as mediaStyles,
-  textMono,
-} from "./primitives"
-import { NFTData, NFTEmbedProps } from "./types"
-import Loading from "./Loading"
-import { defaultTheme, darkTheme, ThemeProvider } from "./theme"
-
+import React, { useState, useEffect, CSSProperties } from "react"
+import { NFTData, NFTEProps } from "./types"
+import Loading from "./components/Loading"
+import NFTMark from "./components/NFTMark"
+import styles from "./styles.css"
 import {
   toTrimmedAddress,
   isImage,
   fileExtension,
   creatorName,
   mediaSelector,
+  cx,
 } from "./utils"
+import useStyleSheet from "./hooks/useStylesheet"
 
-const API_HOST: string = "http://localhost:3000"
+declare const API_HOST: string
+export const css = styles
 
-const creator = cx(
-  base,
-  css({
-    py: "@2",
-    px: "@2",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  })
-)
-
-const mediaWrapper = cx(
-  base,
-  css({
-    display: "flex",
-    maxWidth: "100%",
-    backgroundColor: "@black",
-    mb: "@2",
-  })
-)
-
-export function NFT({
+function NFT({
   data: {
+    contract,
     creatorOf,
     ownerOf,
     metadata,
@@ -51,50 +26,47 @@ export function NFT({
     timestamp,
     platform,
     media,
-    contract,
-    tokenId,
   },
-}: NFTEmbedProps) {
+  className,
+  style,
+  darkMode,
+}: NFTEProps) {
   const mediaUrl = mediaSelector({ image: metadata?.image, media })
 
   return (
-    <div className={wrapper}>
-      <section className={creator}>
-        <div className={cx(base, css({ minWidth: 0, pr: "@1" }))}>
-          <p className={cx(base, css({ color: "@text-light", mb: "@0" }))}>
-            Created by
-          </p>
-          <p
-            className={cx(
-              textMono,
-              css({
-                fontSize: "@2",
-                fontWeight: 700,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              })
-            )}
-          >
-            {creatorName(creatorOf)}
-          </p>
+    <div
+      className={cx([
+        "nfte",
+        "nfte--loaded",
+        darkMode && "nfte--dark-mode",
+        className,
+      ])}
+      style={style}
+    >
+      <section className="pr1 pl1 pt0 pb0 nfte__header">
+        <div className="pr0 nfte__creator">
+          <p className="nfte__label">Created by</p>
+          <p className="nfte__creator-id">{creatorName(creatorOf)}</p>
         </div>
 
-        <a
-          className={base}
-          href={`https://etherscan.com/token/${contract}?a=${tokenId}`}
-        >
-          View on Etherscan
-        </a>
+        <div className="nfte__nftmark">
+          <NFTMark />
+        </div>
       </section>
       {media && (
-        <section className={mediaWrapper}>
+        <section className="nfte__media">
           {isImage(mediaUrl) ? (
-            <img className={mediaStyles} src={mediaUrl} />
+            <img className="nfte__media-content" src={mediaUrl} />
           ) : (
-            <video muted autoPlay loop playsInline poster={metadata?.image}>
+            <video
+              className="nfte__media-content"
+              muted
+              autoPlay
+              loop
+              playsInline
+              poster={metadata?.image}
+            >
               <source
-                className={mediaStyles}
                 src={mediaUrl}
                 type={`video/${fileExtension(mediaUrl)}`}
               />
@@ -102,80 +74,32 @@ export function NFT({
           )}
         </section>
       )}
-      <section
-        className={cx(base, css({ display: "flex", mb: "@2", px: "@2" }))}
-      >
-        <p className={cx(text, css({ lineHeight: 1.4 }))}>
-          <span className={cx(text, css({ fontWeight: 700, fontSize: "@1" }))}>
-            {metadata?.name}
-          </span>
-          <span className={cx(text, css({ ml: "@1" }))}>
-            — {metadata?.description}
-          </span>
-        </p>
-      </section>
-      <section
-        className={cx(
-          base,
-          css({
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-          })
-        )}
-      >
-        <div className={cx(base, css({ mb: "@2", px: "@2" }))}>
-          <p className={cx(text, css({ color: "@text-light", mb: "@0" }))}>
-            Collected by
-          </p>
-          <p
-            className={cx(
-              textMono,
-              css({
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              })
-            )}
-          >
+
+      <p className="pr1 pl1 nfte__name">{metadata?.name}</p>
+      <p className="pr1 pl1 pb1 nfte__description">{metadata?.description}</p>
+
+      <section className="nfte__meta">
+        <div className="pl1 pr1 nfte__single-meta">
+          <p className="nfte__label">Collected by</p>
+          <p className="nfte__meta-content">
             {ownerOf?.ensName
               ? ownerOf?.ensName
               : toTrimmedAddress(ownerOf?.address)}
           </p>
         </div>
 
-        <div className={cx(base, css({ mb: "@2", px: "@2" }))}>
-          <p className={cx(text, css({ color: "@text-light", mb: "@0" }))}>
-            Minted by
-          </p>
-          <p
-            className={cx(
-              textMono,
-              css({
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              })
-            )}
-          >
-            {platform?.name}
+        <div className="pl1 pr1 nfte__single-meta">
+          <p className="nfte__label">Minted by</p>
+          <p className="nfte__meta-content">
+            {platform?.name ? platform?.name : toTrimmedAddress(contract)}
           </p>
         </div>
 
-        <div className={cx(base, css({ mb: "@2", px: "@2" }))}>
-          <p className={cx(text, css({ color: "@text-light", mb: "@0" }))}>
-            Minted on
-          </p>
+        <div className="pl1 pr1 nfte__single-meta">
+          <p className="nfte__label">Minted on</p>
           <p
             title={`Block number: ${blockNumber}`}
-            className={cx(
-              textMono,
-              css({
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              })
-            )}
+            className="nfte__meta-content"
           >
             {timestamp}
           </p>
@@ -185,45 +109,43 @@ export function NFT({
   )
 }
 
-export function NFTEmbed({
+export function NFTE({
   contract = "0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0",
   tokenId = "17824",
   initialData,
-  styleOverrides,
-  theme,
+  className,
+  style,
+  darkMode,
 }: {
   contract: string
   tokenId: string
   initialData?: NFTData
-  styleOverrides?: object
-  theme?: any
+  className?: string
+  style?: CSSProperties
+  darkMode?: boolean
 }) {
-  let themeConfig = defaultTheme
+  useStyleSheet(styles)
+
   const [data, setData] = useState<NFTData | undefined>(initialData)
   useEffect(() => {
     if (initialData) return
     async function fetchNftData() {
       const r = await fetch(
-        `http://localhost:3000/api/nft-data?contract=${contract}&tokenId=${tokenId}`
+        `${API_HOST}/api/nft-data?contract=${contract}&tokenId=${tokenId}`
       )
 
-      const data = await r.json()
-      setData(data)
+      if (r.ok) {
+        const data = await r.json()
+        setData(data)
+      }
     }
 
     fetchNftData()
   }, [])
 
-  if (theme === "dark") themeConfig = { ...themeConfig, colors: darkTheme }
-  if (typeof theme === "object") themeConfig = theme
+  if (!data) return <Loading style={style} />
 
   return (
-    <ThemeProvider value={themeConfig}>
-      {!data ? (
-        <Loading />
-      ) : (
-        <NFT data={data} styleOverrides={styleOverrides} />
-      )}
-    </ThemeProvider>
+    <NFT data={data} className={className} style={style} darkMode={darkMode} />
   )
 }

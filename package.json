@@ -4,8 +4,7 @@
     "dev": "lerna run dev --parallel"
   },
   "workspaces": [
-    "packages/*",
-    "demo"
+    "packages/*"
   ],
   "devDependencies": {
     "lerna": "^3.22.1"

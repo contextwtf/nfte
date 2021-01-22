@@ -1,24 +1,23 @@
 {
-  "name": "@nftmark/react",
+  "name": "@nfte/react",
   "version": "0.0.1",
-  "description": "A React component for rendering NFT's",
+  "description": "A React component for rendering NFT's in your app",
   "source": "src/index.tsx",
   "main": "dist/react.js",
   "module": "dist/react.esm.js",
   "exports": "dist/react.modern.js",
   "types": "dist/react.d.ts",
-  "license": "GPL-3.0",
+  "license": "MIT",
+  "author": "Sam Mason de Caires <sam.jbmason@gmail.com>",
   "scripts": {
-    "build": "microbundle -f modern,es,cjs --jsx React.createElement --define API_HOST='https://nftmark.net'",
-    "dev": "microbundle watch -f modern,es,cjs --jsx React.createElement --define API_HOST='http://localhost:3000'"
+    "build": "microbundle -f modern,es,cjs --jsx React.createElement --define API_HOST='https://nftmark.net' --css inline",
+    "dev": "microbundle watch -f modern,es,cjs --jsx React.createElement --define API_HOST='http://localhost:3000' --css inline"
   },
   "devDependencies": {
     "microbundle": "^0.13.0",
     "react": "^16.13.1 || ^17.x"
   },
   "peerDependencies": {
-    "@emotion/css": "^11.1.3",
-    "@stitches/react": "^0.0.2",
     "react": "^16.13.1 || ^17.x"
   },
   "files": [

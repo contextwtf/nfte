@@ -1,3 +1,5 @@
+import { CSSProperties } from "react"
+
 export type NFTData = {
   contract: string
   tokenId: string
@@ -18,25 +20,9 @@ export type NFTData = {
   media: string
 }
 
-export type NFTEmbedProps = {
+export type NFTEProps = {
   data: NFTData
-  theme?: string | object
-  styleOverrides?: object
-}
-
-export type ThemeDefinition = {
-  colors?: any
-  space?: any
-  fontSizes?: any
-  fonts?: any
-  fontWeights?: any
-  lineHeights?: any
-  letterSpacings?: any
-  sizes?: any
-  borderWidths?: any
-  borderStyles?: any
-  radii?: any
-  shadows?: any
-  zIndices?: any
-  transitions?: any
+  className?: string
+  style?: CSSProperties
+  darkMode?: boolean
 }

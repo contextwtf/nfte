@@ -43,3 +43,7 @@ export function mediaSelector({
 }) {
   return media ?? image
 }
+
+export function cx(classNames: unknown[]) {
+  return classNames.filter(Boolean).join(" ")
+}

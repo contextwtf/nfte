@@ -1,6 +1,7 @@
-import nftData from "docs/utils/nftData"
+import getNFTData from "@utils/getNFTData"
+import allowCORS from "@utils/allowCORS"
 
-export default async function handler(req, res) {
+export default allowCORS(async function handler(req, res) {
   const { contract, tokenId } = req.query
 
   if (!contract || !tokenId) {
@@ -9,7 +10,7 @@ export default async function handler(req, res) {
       .json({ error: "Missing contract or tokendId parameters" })
   }
   try {
-    const data = await nftData({ contract, tokenId })
+    const data = await getNFTData({ contract, tokenId })
 
     res.setHeader(
       "Cache-Control",
@@ -19,4 +20,4 @@ export default async function handler(req, res) {
   } catch (e) {
     res.status(400).json({ error: "Cannot retrieve nft data" })
   }
-}
+})
