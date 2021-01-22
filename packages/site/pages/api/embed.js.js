@@ -33,7 +33,7 @@ export default allowCORS(async function handler(req, res) {
   try {
     const data = await getNFTData({ contract, tokenId })
     const html = renderToStaticMarkup(
-      <NFTEmbed initialData={data} darkMode={darkMode} />
+      <NFTE initialData={data} darkMode={darkMode} />
     )
 
     res.setHeader("Content-Type", "text/javascript; charset=utf-8")
