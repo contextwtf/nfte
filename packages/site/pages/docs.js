@@ -107,6 +107,10 @@ export default function Docs() {
         </Box>
       </Box>
 
+      <Box>Add a known contract</Box>
+
+      <Box>Embed structure</Box>
+
       <Footer />
     </Box>
   )

@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function NFTMark() {
+export default function NFTIcon() {
   return (
     <svg
       viewBox="0 0 177 68"

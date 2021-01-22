@@ -1,7 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev": "lerna run dev --parallel"
+    "dev": "lerna run dev --parallel",
+    "version": "lerna version",
+    "publish": "lerna publish"
   },
   "workspaces": [
     "packages/*"

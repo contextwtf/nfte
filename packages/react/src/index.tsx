@@ -1,7 +1,7 @@
 import React, { useState, useEffect, CSSProperties } from "react"
 import { NFTData, NFTEProps } from "./types"
 import Loading from "./components/Loading"
-import NFTMark from "./components/NFTMark"
+import NFTIcon from "./components/NFTIcon"
 import styles from "./styles.css"
 import {
   toTrimmedAddress,
@@ -49,8 +49,8 @@ function NFT({
           <p className="nfte__creator-id">{creatorName(creatorOf)}</p>
         </div>
 
-        <div className="nfte__nftmark">
-          <NFTMark />
+        <div>
+          <NFTIcon />
         </div>
       </section>
       {media && (
