@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "lerna run dev --parallel",
+    "build": "lerna run build",
     "version": "lerna version",
     "publish": "lerna publish"
   },
