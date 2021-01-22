@@ -1,4 +1,4 @@
-# @nfte/react
+# `@nfte/react`
 
 A small, customisable React component for rendering NFT's in your site/app
 https://nfte.app
