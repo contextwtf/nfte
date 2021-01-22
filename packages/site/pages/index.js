@@ -1,4 +1,3 @@
-import { NFTE } from "@nfte/react"
 import Link from "next/link"
 import Box from "@components/Box"
 import CodeBlock from "@components/CodeBlock"
@@ -110,11 +109,11 @@ export default function Home() {
       </Box>
 
       <Box css={{ mb: "@4" }}>
-        <NFTE
+        {/* <NFTE
           contract="0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0"
           tokenId="17824"
           style={{ marginLeft: "auto", marginRight: "auto" }}
-        />
+        /> */}
       </Box>
 
       <Footer />
