@@ -30,5 +30,13 @@
   },
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "typescript",
+    "nft",
+    "ethereum",
+    "dapp",
+    "ipfs",
+    "erc-721"
   ]
 }
