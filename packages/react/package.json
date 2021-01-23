@@ -5,7 +5,6 @@
   "source": "src/index.tsx",
   "main": "dist/react.js",
   "module": "dist/react.esm.js",
-  "exports": "./dist/react.modern.js",
   "types": "dist/index.d.ts",
   "sideEffects": [
     "*.css"
@@ -14,8 +13,8 @@
   "author": "Sam Mason de Caires <sam.jbmason@gmail.com>",
   "repository": "sammdec/nfte",
   "scripts": {
-    "build": "microbundle -f modern,es,cjs --jsx React.createElement --define API_HOST='https://nfte.app' --css inline",
-    "dev": "microbundle watch -f modern,es,cjs --jsx React.createElement --define API_HOST='http://localhost:3000' --css inline",
+    "build": "microbundle -f es,cjs --jsx React.createElement --define API_HOST='https://nfte.app' --css inline",
+    "dev": "microbundle watch -f es,cjs --jsx React.createElement --define API_HOST='http://localhost:3000' --css inline",
     "prepare": "yarn build"
   },
   "publishConfig": {
