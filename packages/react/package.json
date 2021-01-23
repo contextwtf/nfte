@@ -5,7 +5,7 @@
   "source": "src/index.tsx",
   "main": "dist/react.js",
   "module": "dist/react.esm.js",
-  "exports": "dist/react.modern.js",
+  "exports": "./dist/react.modern.js",
   "types": "dist/index.d.ts",
   "sideEffects": [
     "*.css"
