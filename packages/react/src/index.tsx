@@ -11,7 +11,7 @@ import {
   mediaSelector,
   cx,
 } from "./utils"
-import useStyleSheet from "./hooks/useStylesheet"
+import useStyleSheet from "./hooks/useStyleSheet"
 
 declare const API_HOST: string
 export const css = styles
