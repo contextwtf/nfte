@@ -3,6 +3,7 @@ import Box from "@components/Box"
 import CodeBlock from "@components/CodeBlock"
 import InlineCode from "@components/InlineCode"
 import Footer from "@components/Footer"
+import { NFTE } from "@nfte/react"
 
 export default function Home() {
   return (
@@ -37,7 +38,7 @@ export default function Home() {
         <Box css={{ width: "100%", fontWeight: 700 }}>React or JS snippet</Box>
         <Box css={{ width: "100%", fontWeight: 700 }}>Free</Box>
         <Box css={{ width: "100%", fontWeight: 700 }}>
-          Tiny size (&lt;3.2KB)
+          Tiny size (&lt;3.5KB)
         </Box>
         <Box css={{ width: "100%", fontWeight: 700 }}>Dark mode</Box>
       </Box>
@@ -109,11 +110,11 @@ export default function Home() {
       </Box>
 
       <Box css={{ mb: "@4" }}>
-        {/* <NFTE
+        <NFTE
           contract="0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0"
           tokenId="17824"
           style={{ marginLeft: "auto", marginRight: "auto" }}
-        /> */}
+        />
       </Box>
 
       <Footer />

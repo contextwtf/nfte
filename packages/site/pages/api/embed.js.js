@@ -1,7 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server"
 import getNFTData from "@utils/getNFTData"
 import allowCORS from "@utils/allowCORS"
-
 import { NFTE, css } from "@nfte/react"
 
 function embedScript(markup, css) {
