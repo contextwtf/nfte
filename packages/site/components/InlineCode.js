@@ -10,8 +10,8 @@ export default function InlineCode({ children }) {
         color: "#994cc3",
         whiteSpace: "nowrap",
         px: "@1",
-        pt: 2,
-        pb: 2,
+        pt: 0,
+        pb: 0,
         borderRadius: 5,
       }}
     >

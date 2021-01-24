@@ -13,35 +13,15 @@ export function isImage(url: string) {
   return validImgExtensions.includes(fileExtension)
 }
 
+export function isAddress(value: string) {
+  return value.startsWith("0x")
+}
+
 export function fileExtension(url: string) {
   if (!url) return null
 
   const mediaUrl = new URL(url)
   return mediaUrl.pathname.split(".").pop()
-}
-
-export function creatorName({
-  ensName,
-  name,
-  address,
-}: {
-  ensName: string | undefined
-  name: string | undefined
-  address: string
-}) {
-  if (name) return name
-  if (ensName) return ensName
-  return toTrimmedAddress(address)
-}
-
-export function mediaSelector({
-  media,
-  image,
-}: {
-  media: string | undefined
-  image: string
-}) {
-  return media ?? image
 }
 
 export function cx(classNames: unknown[]) {

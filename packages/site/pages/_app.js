@@ -6,6 +6,7 @@ css.global({
     margin: 0,
     fontFamily: "@body",
     fontSize: "@1",
+    lineHeight: 1.4,
     WebkitFontSmoothing: "antialiased",
     MozOsxFontSmoothing: "grayscale",
   },

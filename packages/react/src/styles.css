@@ -40,6 +40,15 @@
 .nfte * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
+}
+
+.nfte a {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.nfte a:hover {
+  opacity: 0.4;
 }
 
 .pr0 {
@@ -114,6 +123,10 @@
   height: 480px;
 }
 
+.nfte--loaded .nfte__media:hover {
+  opacity: 0.8;
+}
+
 .nfte--loaded .nfte__media-content {
   display: block;
   max-width: 100%;
@@ -150,6 +163,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: currentColor;
+  text-decoration: none;
 }
 
 /* Loading state styles */

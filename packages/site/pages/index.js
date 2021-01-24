@@ -1,13 +1,18 @@
 import Link from "next/link"
+import sample from "lodash/sample"
 import Box from "@components/Box"
 import CodeBlock from "@components/CodeBlock"
 import InlineCode from "@components/InlineCode"
 import Footer from "@components/Footer"
 import { NFTE } from "@nfte/react"
 
+import previewNFTs from "utils/previewNFTs"
+
+const previewNFT = sample(previewNFTs)
+
 export default function Home() {
   return (
-    <Box as="main" css={{ maxWidth: 680, mx: "auto", py: "@3" }}>
+    <Box as="main" css={{ maxWidth: 740, mx: "auto", py: "@3", px: "@2" }}>
       <Box
         as="h1"
         css={{
@@ -22,8 +27,19 @@ export default function Home() {
         NFTE
       </Box>
 
-      <Box as="p" css={{ textAlign: "center", m: 0, mb: "@3" }}>
-        Easily embed NFT's in your website
+      <Box
+        as="p"
+        css={{
+          fontSize: "@2",
+          color: "@textLight",
+          textAlign: "center",
+          m: 0,
+          mb: "@3",
+          px: "@3",
+        }}
+      >
+        A universal way of embedding NFTs in your website or app, works with any
+        ERC-721 contract. Bring The Metaverse to Web2.
       </Box>
 
       <Box
@@ -33,6 +49,7 @@ export default function Home() {
           pb: "@4",
           textAlign: "center",
           borderBottom: "1px solid @border",
+          alignItems: "center",
         }}
       >
         <Box css={{ width: "100%", fontWeight: 700 }}>React or JS snippet</Box>
@@ -65,20 +82,18 @@ export default function Home() {
 
         <Box
           as="a"
-          href="https://github.com/samjbmason/nfte"
+          href="https://github.com/sammdec/nfte"
+          target="_blank"
           css={{
             display: "inline-flex",
-            borderRadius: 5,
-            backgroundColor: "@text",
-            color: "@bg",
+            color: "currentcolor",
             px: "@3",
             py: "@2",
-            textDecoration: "none",
             fontWeight: 700,
             mx: "@2",
           }}
         >
-          Github
+          GitHub
         </Box>
       </Box>
 
@@ -111,8 +126,8 @@ export default function Home() {
 
       <Box css={{ mb: "@4" }}>
         <NFTE
-          contract="0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0"
-          tokenId="17824"
+          contract={previewNFT.contract}
+          tokenId={previewNFT.tokenId}
           style={{ marginLeft: "auto", marginRight: "auto" }}
         />
       </Box>

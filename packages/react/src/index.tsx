@@ -7,8 +7,7 @@ import {
   toTrimmedAddress,
   isImage,
   fileExtension,
-  creatorName,
-  mediaSelector,
+  isAddress,
   cx,
 } from "./utils"
 import useStyleSheet from "./hooks/useStyleSheet"
@@ -18,21 +17,22 @@ export const css = styles
 
 function NFT({
   data: {
-    contract,
     creatorOf,
+    creatorOfUrl,
     ownerOf,
+    ownerOfUrl,
     metadata,
     blockNumber,
     timestamp,
-    platform,
+    mintedBy,
+    mintedByUrl,
     media,
+    mediaPageUrl,
   },
   className,
   style,
   darkMode,
 }: NFTEProps) {
-  const mediaUrl = mediaSelector({ image: metadata?.image, media })
-
   return (
     <div
       className={cx([
@@ -46,17 +46,22 @@ function NFT({
       <section className="pr1 pl1 pt0 pb0 nfte__header">
         <div className="pr0 nfte__creator">
           <p className="nfte__label">Created by</p>
-          <p className="nfte__creator-id">{creatorName(creatorOf)}</p>
+          <a target="_blank" href={creatorOfUrl} className="nfte__creator-id">
+            {isAddress(creatorOf) ? toTrimmedAddress(creatorOf) : creatorOf}
+          </a>
         </div>
 
         <div>
-          <NFTIcon />
+          <a href="https://nfte.app/whats-an-nft" target="_blank">
+            <NFTIcon />
+          </a>
         </div>
       </section>
+
       {media && (
-        <section className="nfte__media">
-          {isImage(mediaUrl) ? (
-            <img className="nfte__media-content" src={mediaUrl} />
+        <a target="_blank" href={mediaPageUrl} className="nfte__media">
+          {isImage(media) ? (
+            <img className="nfte__media-content" src={media} />
           ) : (
             <video
               className="nfte__media-content"
@@ -66,13 +71,10 @@ function NFT({
               playsInline
               poster={metadata?.image}
             >
-              <source
-                src={mediaUrl}
-                type={`video/${fileExtension(mediaUrl)}`}
-              />
+              <source src={media} type={`video/${fileExtension(media)}`} />
             </video>
           )}
-        </section>
+        </a>
       )}
 
       <p className="pr1 pl1 nfte__name">{metadata?.name}</p>
@@ -80,19 +82,17 @@ function NFT({
 
       <section className="nfte__meta">
         <div className="pl1 pr1 nfte__single-meta">
-          <p className="nfte__label">Collected by</p>
-          <p className="nfte__meta-content">
-            {ownerOf?.ensName
-              ? ownerOf?.ensName
-              : toTrimmedAddress(ownerOf?.address)}
-          </p>
+          <p className="nfte__label">Owner</p>
+          <a target="_blank" href={ownerOfUrl} className="nfte__meta-content">
+            {isAddress(ownerOf) ? toTrimmedAddress(ownerOf) : ownerOf}
+          </a>
         </div>
 
         <div className="pl1 pr1 nfte__single-meta">
           <p className="nfte__label">Minted by</p>
-          <p className="nfte__meta-content">
-            {platform?.name ? platform?.name : toTrimmedAddress(contract)}
-          </p>
+          <a target="_blank" href={mintedByUrl} className="nfte__meta-content">
+            {isAddress(mintedBy) ? toTrimmedAddress(mintedBy) : mintedBy}
+          </a>
         </div>
 
         <div className="pl1 pr1 nfte__single-meta">
@@ -141,7 +141,7 @@ export function NFTE({
     }
 
     fetchNftData()
-  }, [])
+  }, [contract, tokenId])
 
   if (!data) return <Loading style={style} />
 
