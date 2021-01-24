@@ -36,9 +36,10 @@ export default allowCORS(async function handler(req, res) {
     )
 
     res.setHeader("Content-Type", "text/javascript; charset=utf-8")
+    // Cache for 30 mins
     res.setHeader(
       "Cache-Control",
-      "Cache-Control: s-maxage=120, stale-while-revalidate"
+      "Cache-Control: s-maxage=1800, stale-while-revalidate"
     )
     res.status(200).send(embedScript(html, css))
   } catch (error) {

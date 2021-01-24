@@ -11,10 +11,10 @@ export default allowCORS(async function handler(req, res) {
   }
   try {
     const data = await getNFTData({ contract, tokenId })
-
+    // Cache for 30 mins
     res.setHeader(
       "Cache-Control",
-      "Cache-Control: s-maxage=120, stale-while-revalidate"
+      "Cache-Control: s-maxage=1800, stale-while-revalidate"
     )
     res.status(200).json(data)
   } catch (e) {
