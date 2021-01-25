@@ -72,7 +72,7 @@ export default async function ({ contract, tokenId }) {
       metadata = { image: resolvedTokenURI }
     }
 
-    console.log(metadata)
+    // console.log(metadata)
 
     // Find a known contract from known contracts
     const knownContract = knownContracts.filter((p) =>
