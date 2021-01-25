@@ -1,4 +1,6 @@
 import Head from "next/head"
+import Link from "next/link"
+import Box from "@components/Box"
 
 export default function WhatsNFT() {
   return (
