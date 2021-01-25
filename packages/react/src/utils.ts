@@ -13,7 +13,7 @@ export function isUrl(value: string) {
 }
 
 export function isAddress(value: string) {
-  return value.startsWith("0x")
+  return value?.startsWith("0x")
 }
 
 export function cx(classNames: unknown[]) {
