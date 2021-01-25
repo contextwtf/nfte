@@ -4,8 +4,8 @@ export default {
   addresses: [""],
   name: "",
   homepage: "",
-  creatorNamePath: "",
-  creatorPageUrl: () => "",
+  creatorOf: "",
+  creatorOfPageUrl: () => "",
   mediaUrl: () => "",
   mediaPageUrl: () => "",
 }

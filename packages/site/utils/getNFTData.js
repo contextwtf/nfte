@@ -16,6 +16,8 @@ export default async function ({ contract, tokenId }) {
 
   const isValidAddress = utils.isAddress(contract)
 
+  console.log(isValidAddress)
+
   if (!isValidAddress) throw Error("not a valid address")
 
   const erc721 = new ethers.Contract(contract, erc721ABI, provider)
@@ -55,14 +57,31 @@ export default async function ({ contract, tokenId }) {
       : tokenURI.value
 
     const r = await fetch(resolvedTokenURI)
-    const metadata = await r.json()
+    const mimeType = r.headers.get("Content-Type")
+    let metadata
+
+    // Handle various types of metadata
+    // Handle json usecase
+    if (mimeType.includes("json")) {
+      metadata = await r.json()
+    }
+    // Handle directly returning plain text
+    else if (mimeType.includes("text/plain")) {
+      metadata = { image: await r.text() }
+    }
+    // Handle return where tokenURI is the asset
+    else {
+      metadata = { image: resolvedTokenURI }
+    }
 
     // console.log(metadata)
 
+    // Find a known contract from known contracts
     const knownContract = knownContracts.filter((p) =>
       p.addresses.map(utils.getAddress).includes(utils.getAddress(contract))
     )[0]
 
+    // If there is a known contract and the property mediaUrl is set otherwise fallback to standard .image property
     const mediaUrl = has(knownContract, "mediaUrl")
       ? knownContract?.mediaUrl({
           contract,
@@ -73,7 +92,9 @@ export default async function ({ contract, tokenId }) {
         })
       : metadata.image
     const media = isIPFS(mediaUrl) ? makeIPFSUrl(mediaUrl) : mediaUrl
-    const mediaPageUrl = get(knownContract, "mediaPageUrl", null)
+
+    // If there is a known contract and .mediaPageUrl is set otherwise use etherscan
+    const mediaPageUrl = has(knownContract, "mediaPageUrl")
       ? knownContract?.mediaPageUrl({
           contract,
           tokenId,
@@ -83,11 +104,20 @@ export default async function ({ contract, tokenId }) {
         })
       : `https://etherscan.io/address/${contract}?a=${tokenId}`
 
-    const creatorOf =
-      get(metadata, knownContract?.creatorNamePath, creatorOfEns) ??
-      creatorOfAddress
-    const creatorOfUrl = get(knownContract, "creatorPageUrl", null)
-      ? knownContract?.creatorPageUrl({
+    // if known contract and has .creatorName set otherwise try ENS else fallback to address
+    const creatorOf = has(knownContract, "creatorOf")
+      ? knownContract?.creatorOf({
+          contract,
+          tokenId,
+          metadata,
+          symbol: symbol.value,
+          creatorOfAddress,
+        })
+      : creatorOfEns ?? creatorOfAddress
+
+    // if known contract and has .creatorPageUrl set otherwise use etherscan
+    const creatorOfUrl = has(knownContract, "creatorOfPageUrl")
+      ? knownContract?.creatorOfPageUrl({
           contract,
           tokenId,
           metadata,
@@ -99,10 +129,12 @@ export default async function ({ contract, tokenId }) {
     const ownerOf = ownerEns ?? ownerOfAddress.value
     const ownerOfUrl = `https://etherscan.io/address/${ownerOfAddress.value}`
 
-    const mintedBy = get(knownContract, "name", null) ?? contract
-    const mintedByUrl =
-      get(knownContract, "homepage", null) ??
+    const mintedBy = get(knownContract, "name", contract)
+    const mintedByUrl = get(
+      knownContract,
+      "homepage",
       `https://etherscan.io/address/${contract}`
+    )
 
     return {
       contract,

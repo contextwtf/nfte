@@ -1,3 +1,4 @@
+import { useState } from "react"
 import Link from "next/link"
 import Head from "next/head"
 import sample from "lodash/sample"
@@ -12,6 +13,9 @@ import previewNFTs from "utils/previewNFTs"
 const previewNFT = sample(previewNFTs)
 
 export default function Home() {
+  const [contract, setContract] = useState("")
+  const [tokenId, setTokenId] = useState("")
+
   return (
     <>
       <Head>
@@ -68,7 +72,15 @@ export default function Home() {
           <Box css={{ width: "100%", fontWeight: 700 }}>Dark mode</Box>
         </Box>
 
-        <Box css={{ display: "flex", justifyContent: "center", mb: "@4" }}>
+        <Box
+          css={{
+            display: "flex",
+            justifyContent: "center",
+            mb: "@4",
+            pb: "@4",
+            borderBottom: "1px solid @border",
+          }}
+        >
           <Link href="/docs" passHref>
             <Box
               as="a"
@@ -76,6 +88,7 @@ export default function Home() {
                 display: "inline-flex",
                 borderRadius: 5,
                 backgroundColor: "@text",
+
                 color: "@bg",
                 px: "@3",
                 py: "@2",
@@ -106,6 +119,68 @@ export default function Home() {
         </Box>
 
         <Box css={{ fontSize: "@3", fontWeight: 700, mb: "@2" }}>
+          Try it out
+        </Box>
+
+        <Box css={{ display: "flex", mb: "@3", justifyContent: "center" }}>
+          <Box
+            css={{
+              display: "flex",
+              flexDirection: "column",
+              mx: "@2",
+            }}
+          >
+            <Box as="label" css={{ fontWeight: 700, mb: "@1" }}>
+              Contract address
+            </Box>
+            <Box
+              as="input"
+              css={{
+                display: "block",
+                fontFamily: "@body",
+                fontSize: "@1",
+                border: "1px solid @text",
+                borderRadius: 5,
+                px: "@1",
+                py: "@0",
+              }}
+              placeholder="0x...."
+              value={contract}
+              onChange={(e) => setContract(e.target.value)}
+            />
+          </Box>
+
+          <Box css={{ display: "flex", flexDirection: "column", mx: "@2" }}>
+            <Box as="label" css={{ fontWeight: 700, mb: "@1" }}>
+              Token ID
+            </Box>
+            <Box
+              as="input"
+              css={{
+                display: "block",
+                fontFamily: "@body",
+                fontSize: "@1",
+                border: "1px solid @text",
+                borderRadius: 5,
+                px: "@1",
+                py: "@0",
+              }}
+              placeholder="1"
+              value={tokenId}
+              onChange={(e) => setTokenId(e.target.value)}
+            />
+          </Box>
+        </Box>
+
+        <Box css={{ mb: "@4" }}>
+          <NFTE
+            contract={contract.length === 0 ? previewNFT.contract : contract}
+            tokenId={tokenId.length === 0 ? previewNFT.tokenId : tokenId}
+            style={{ marginLeft: "auto", marginRight: "auto" }}
+          />
+        </Box>
+
+        <Box css={{ fontSize: "@3", fontWeight: 700, mb: "@2" }}>
           Quickstart
         </Box>
         <Box css={{ mb: "@3" }}>
@@ -125,21 +200,13 @@ export default function Home() {
           />
         </Box>
 
-        <Box css={{ mb: "@2" }}>
+        <Box css={{ mb: "@4" }}>
           <Box css={{ fontWeight: 700, mb: "@1" }}>React</Box>
           <Box css={{ mb: "@1" }}>
             Install with <InlineCode>npm i @nftmark/react</InlineCode> or{" "}
             <InlineCode>yarn add @nftmark/react</InlineCode>
           </Box>
           <CodeBlock code={`<NFTEmbed contract="0x..." tokenId="1"/>`} />
-        </Box>
-
-        <Box css={{ mb: "@4" }}>
-          <NFTE
-            contract={previewNFT.contract}
-            tokenId={previewNFT.tokenId}
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-          />
         </Box>
 
         <Footer />

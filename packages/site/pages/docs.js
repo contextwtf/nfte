@@ -46,33 +46,29 @@ export default function Docs() {
         <Box>
           <Box as="ul" css={{ pl: "@3" }}>
             <Box as="li" css={{ mb: "@0" }}>
-              <Link href="#installation" passHref>
+              <Link href="/docs#installation" passHref>
                 <Box as="a" css={{ color: "currentcolor" }}>
                   Installation
                 </Box>
               </Link>
             </Box>
             <Box as="li" css={{ mb: "@0" }}>
-              <Link href="#configuration" passHref>
+              <Link href="/docs#configuration" passHref>
                 <Box as="a" css={{ color: "currentcolor" }}>
                   Configuration
                 </Box>
               </Link>
             </Box>
             <Box as="li" css={{ mb: "@0" }}>
-              <Link href="#data-structure" passHref>
+              <Link href="/docs#data-structure" passHref>
                 <Box as="a" css={{ color: "currentcolor" }}>
                   Embeds data structure
                 </Box>
               </Link>
             </Box>
             <Box as="li" css={{ mb: "@0" }}>
-              <Link href="#known-contracts" passHref>
-                <Box
-                  as="a"
-                  href="/#known-contracts"
-                  css={{ color: "currentcolor" }}
-                >
+              <Link href="/docs#known-contracts" passHref>
+                <Box as="a" css={{ color: "currentcolor" }}>
                   Adding a known contract
                 </Box>
               </Link>
@@ -215,8 +211,15 @@ export default function Docs() {
               Platorm
             </Box>{" "}
             - will show the creators platform username if a known contract file
-            is found and <InlineCode>usernamePath</InlineCode> is set to a value
-            in the metadata.
+            is found and the <InlineCode>creatorOf</InlineCode> is set. The
+            property takes a function and the following data is passed as the
+            argument{" "}
+            <InlineCode>{`{ contract,
+          tokenId,
+          metadata,
+          symbol, 
+          creatorOfAddress }`}</InlineCode>
+            .
           </Box>
         </Box>
 
@@ -236,7 +239,7 @@ export default function Docs() {
             </Box>{" "}
             - links to the creators profile on the platform if a known contract
             file is found and a value is present for{" "}
-            <InlineCode>creatorPageUrl</InlineCode>. The property takes a
+            <InlineCode>creatorOfPageUrl</InlineCode>. The property takes a
             function and the following data is passed as the argument{" "}
             <InlineCode>{`{ contract,
           tokenId,
@@ -416,9 +419,9 @@ export default function Docs() {
           add enhanced data to NFTE then please create a Pull Request.
         </Box>
 
-        <Box as="p" css={{ m: 0, mb: "@1" }}>
+        <Box css={{ m: 0, mb: "@1" }}>
           <strong>Currently supported</strong>
-          <Box as="ul" css={{ pl: "@3" }}>
+          <Box as="ul" css={{ pl: "@3", mb: "@4", mt: "@1" }}>
             <Box as="li" css={{ mb: "@1" }}>
               Async Art
             </Box>
@@ -434,9 +437,12 @@ export default function Docs() {
             <Box as="li" css={{ mb: "@1" }}>
               SuperRare
             </Box>
+            <Box as="li" css={{ mb: "@1" }}>
+              Zora
+            </Box>
           </Box>
           <strong>Would like</strong>
-          <Box as="ul" css={{ pl: "@3" }}>
+          <Box as="ul" css={{ pl: "@3", mb: "@4", mt: "@1" }}>
             <Box as="li" css={{ mb: "@1" }}>
               Cryptokitties
             </Box>
@@ -449,14 +455,14 @@ export default function Docs() {
           </Box>
         </Box>
 
-        <Box as="p" css={{ m: 0, mb: "@1" }}>
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
           1. You should create a Javascript file named after your project or
           platform in the <InlineCode>/knownContracts</InlineCode> folder
         </Box>
 
-        <Box as="p" css={{ m: 0, mb: "@1" }}>
+        <Box css={{ m: 0, mb: "@3" }}>
           2. The contents can be any of the following properties
-          <Box as="ul" css={{ pl: "@3" }}>
+          <Box as="ul" css={{ pl: "@3", mb: "@4", mt: "@1" }}>
             <Box as="li" css={{ mb: "@1" }}>
               <InlineCode>addresses</InlineCode> -{" "}
               <strong>array (Required)</strong> An array containing one of more
@@ -472,12 +478,19 @@ export default function Docs() {
               homepage URL of your project or platform
             </Box>
             <Box as="li" css={{ mb: "@1" }}>
-              <InlineCode>creatorNamePath</InlineCode> - <strong>string</strong>{" "}
-              The object path as a dot notated string to the location in the
-              metadata file where the creator name can be found
+              <InlineCode>creatorOf</InlineCode> -{" "}
+              <strong>
+                function{" "}
+                {`<{ contract,
+          tokenId,
+          metadata,
+          symbol, 
+          creatorOfAddress }>`}
+              </strong>{" "}
+              Should return the name of the creator on the project or platform
             </Box>
             <Box as="li" css={{ mb: "@1" }}>
-              <InlineCode>creatorPageUrl</InlineCode> -{" "}
+              <InlineCode>creatorOfPageUrl</InlineCode> -{" "}
               <strong>
                 function{" "}
                 {`<{ contract,

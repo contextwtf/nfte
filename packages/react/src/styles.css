@@ -123,10 +123,6 @@
   height: 480px;
 }
 
-.nfte--loaded .nfte__media:hover {
-  opacity: 0.8;
-}
-
 .nfte--loaded .nfte__media-content {
   display: block;
   max-width: 100%;
@@ -138,6 +134,10 @@
   margin-bottom: auto;
 }
 
+.nfte__media-content--text {
+  color: var(--nfte-colors-bg);
+}
+
 .nfte--loaded .nfte__name {
   color: var(--nfte-colors-text);
   font-weight: 700;
@@ -146,6 +146,19 @@
 .nfte--loaded .nfte__description {
   color: var(--nfte-colors-text);
   line-height: 1.4;
+}
+
+.nfte--loaded .nfte__view-buy {
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--nfte-colors-text);
+  color: var(--nfte-colors-text);
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: var(--nfte-space-1);
+  margin-right: var(--nfte-space-1);
+  margin-bottom: var(--nfte-space-1);
+  border-radius: 5px;
 }
 
 .nfte--loaded .nfte__meta {

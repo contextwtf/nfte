@@ -2,14 +2,9 @@ import React, { useState, useEffect, CSSProperties } from "react"
 import { NFTData, NFTEProps } from "./types"
 import Loading from "./components/Loading"
 import NFTIcon from "./components/NFTIcon"
+import Media from "./components/Media"
 import styles from "./styles.css"
-import {
-  toTrimmedAddress,
-  isImage,
-  fileExtension,
-  isAddress,
-  cx,
-} from "./utils"
+import { toTrimmedAddress, isAddress, cx } from "./utils"
 import useStyleSheet from "./hooks/useStyleSheet"
 
 declare const API_HOST: string
@@ -59,22 +54,9 @@ function NFT({
       </section>
 
       {media && (
-        <a target="_blank" href={mediaPageUrl} className="nfte__media">
-          {isImage(media) ? (
-            <img className="nfte__media-content" src={media} />
-          ) : (
-            <video
-              className="nfte__media-content"
-              muted
-              autoPlay
-              loop
-              playsInline
-              poster={metadata?.image}
-            >
-              <source src={media} type={`video/${fileExtension(media)}`} />
-            </video>
-          )}
-        </a>
+        <section className="nfte__media">
+          <Media media={media} />
+        </section>
       )}
 
       <p className="pr1 pl1 nfte__name">{metadata?.name}</p>
@@ -105,6 +87,14 @@ function NFT({
           </p>
         </div>
       </section>
+
+      <a
+        target="_blank"
+        href={mediaPageUrl}
+        className="pr1 pl1 pt1 pb1 nfte__view-buy"
+      >
+        {mediaPageUrl?.includes("etherscan.io") ? "View" : "Buy / Bid"}
+      </a>
     </div>
   )
 }
@@ -130,6 +120,7 @@ export function NFTE({
   useEffect(() => {
     if (initialData) return
     async function fetchNftData() {
+      setData(undefined)
       const r = await fetch(
         `${API_HOST}/api/nft-data?contract=${contract}&tokenId=${tokenId}`
       )

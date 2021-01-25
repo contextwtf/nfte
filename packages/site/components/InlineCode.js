@@ -3,6 +3,7 @@ import Box from "@components/Box"
 export default function InlineCode({ children }) {
   return (
     <Box
+      as="span"
       css={{
         display: "inline-block",
         fontFamily: "@mono",
