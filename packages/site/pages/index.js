@@ -237,7 +237,11 @@ export default function Home() {
             Install with <InlineCode>npm i @nfte/react</InlineCode> or{" "}
             <InlineCode>yarn add @nfte/react</InlineCode>
           </Box>
-          <CodeBlock code={`<NFTE contract="0x..." tokenId="1"/>`} />
+          <CodeBlock
+            code={`import { NFTE } from '@nfte/react';
+
+<NFTE contract="0x..." tokenId="1"/>`}
+          />
         </Box>
 
         <Footer />
