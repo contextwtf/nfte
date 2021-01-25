@@ -21,6 +21,7 @@ export default function App({ Component, pageProps }) {
     // Initialize Fathom when the app loads
     Fathom.load("CUOXTDGQ", {
       excludedDomains: ["localhost"],
+      url: "https://bee.nfte.app/script.js",
     })
 
     function onRouteChangeComplete() {
