@@ -16,8 +16,6 @@ export default async function ({ contract, tokenId }) {
 
   const isValidAddress = utils.isAddress(contract)
 
-  console.log(isValidAddress)
-
   if (!isValidAddress) throw Error("not a valid address")
 
   const erc721 = new ethers.Contract(contract, erc721ABI, provider)
@@ -74,7 +72,7 @@ export default async function ({ contract, tokenId }) {
       metadata = { image: resolvedTokenURI }
     }
 
-    // console.log(metadata)
+    console.log(metadata)
 
     // Find a known contract from known contracts
     const knownContract = knownContracts.filter((p) =>

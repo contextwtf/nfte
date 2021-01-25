@@ -4,7 +4,6 @@ export default function makeIPFSUrl(url) {
   if (cid(url)) return `https://gateway.pinata.cloud/ipfs/${url}`
 
   const urlObject = new URL(url)
-  console.log("heyyyy", urlObject)
 
   const IPFSUrl = `https://gateway.pinata.cloud/ipfs/${urlObject.pathname.replace(
     /^\//,

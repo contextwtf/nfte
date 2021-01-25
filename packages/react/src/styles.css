@@ -146,6 +146,7 @@
 .nfte--loaded .nfte__description {
   color: var(--nfte-colors-text);
   line-height: 1.4;
+  white-space: pre-line;
 }
 
 .nfte--loaded .nfte__view-buy {
