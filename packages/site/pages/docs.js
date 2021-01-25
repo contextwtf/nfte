@@ -457,7 +457,17 @@ export default function Docs() {
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
           1. You should create a Javascript file named after your project or
-          platform in the <InlineCode>/knownContracts</InlineCode> folder
+          platform in the{" "}
+          <InlineCode>
+            <Box
+              as="a"
+              href="https://github.com/sammdec/nfte/tree/main/packages/site/knownContracts"
+              css={{ textDecoration: "underline", color: "currentColor" }}
+            >
+              packages/site/knownContracts
+            </Box>
+          </InlineCode>{" "}
+          folder
         </Box>
 
         <Box css={{ m: 0, mb: "@3" }}>
@@ -535,7 +545,16 @@ export default function Docs() {
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
           3. Import then export the file from the{" "}
-          <InlineCode>knownContracts/index.js</InlineCode> file.
+          <InlineCode>
+            <Box
+              as="a"
+              href="https://github.com/sammdec/nfte/tree/main/packages/site/knownContracts/index.js"
+              css={{ textDecoration: "underline", color: "currentColor" }}
+            >
+              packages/site/knownContracts/index.js
+            </Box>
+          </InlineCode>{" "}
+          file.
         </Box>
 
         <Footer />
