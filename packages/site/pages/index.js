@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useDebounce } from "use-debounce"
 import Link from "next/link"
 import Head from "next/head"
 import sample from "lodash/sample"
@@ -10,11 +11,12 @@ import { NFTE } from "@nfte/react"
 
 import previewNFTs from "utils/previewNFTs"
 
-const previewNFT = sample(previewNFTs)
-
 export default function Home() {
+  const [randomNFT, setRandomNFT] = useState(sample(previewNFTs))
   const [contract, setContract] = useState("")
   const [tokenId, setTokenId] = useState("")
+  const [debouncedContract] = useDebounce(contract, 1000)
+  const [debouncedTokenId] = useDebounce(tokenId, 1000)
 
   return (
     <>
@@ -88,7 +90,6 @@ export default function Home() {
                 display: "inline-flex",
                 borderRadius: 5,
                 backgroundColor: "@text",
-
                 color: "@bg",
                 px: "@3",
                 py: "@2",
@@ -137,7 +138,7 @@ export default function Home() {
               as="input"
               css={{
                 display: "block",
-                fontFamily: "@body",
+                fontFamily: "@mono",
                 fontSize: "@1",
                 border: "1px solid @text",
                 borderRadius: 5,
@@ -158,7 +159,7 @@ export default function Home() {
               as="input"
               css={{
                 display: "block",
-                fontFamily: "@body",
+                fontFamily: "@mono",
                 fontSize: "@1",
                 border: "1px solid @text",
                 borderRadius: 5,
@@ -170,12 +171,42 @@ export default function Home() {
               onChange={(e) => setTokenId(e.target.value)}
             />
           </Box>
+
+          <Box css={{ alignSelf: "flex-end" }}>or</Box>
+          <Box
+            as="button"
+            css={{
+              alignSelf: "flex-end",
+              border: "none",
+              borderRadius: 5,
+              backgroundColor: "@text",
+              color: "@bg",
+              px: "@3",
+              py: "@2",
+              textDecoration: "none",
+              fontSize: "@0",
+              fontWeight: 700,
+              mx: "@2",
+              cursor: "pointer",
+            }}
+            onClick={() => setRandomNFT(sample(previewNFTs))}
+          >
+            Get random NFT
+          </Box>
         </Box>
 
         <Box css={{ mb: "@4" }}>
           <NFTE
-            contract={contract.length === 0 ? previewNFT.contract : contract}
-            tokenId={tokenId.length === 0 ? previewNFT.tokenId : tokenId}
+            contract={
+              debouncedContract.length === 0
+                ? randomNFT.contract
+                : debouncedContract
+            }
+            tokenId={
+              debouncedTokenId.length === 0
+                ? randomNFT.tokenId
+                : debouncedTokenId
+            }
             style={{ marginLeft: "auto", marginRight: "auto" }}
           />
         </Box>

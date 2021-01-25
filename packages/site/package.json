@@ -19,6 +19,7 @@
     "next": "^10.0.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-live": "^2.2.3"
+    "react-live": "^2.2.3",
+    "use-debounce": "^5.2.0"
   }
 }
