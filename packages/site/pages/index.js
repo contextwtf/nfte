@@ -123,12 +123,20 @@ export default function Home() {
           Try it out
         </Box>
 
-        <Box css={{ display: "flex", mb: "@3", justifyContent: "center" }}>
+        <Box
+          css={{
+            display: "flex",
+
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <Box
             css={{
               display: "flex",
               flexDirection: "column",
               mx: "@2",
+              mb: "@3",
             }}
           >
             <Box as="label" css={{ fontWeight: 700, mb: "@1" }}>
@@ -151,7 +159,14 @@ export default function Home() {
             />
           </Box>
 
-          <Box css={{ display: "flex", flexDirection: "column", mx: "@2" }}>
+          <Box
+            css={{
+              display: "flex",
+              flexDirection: "column",
+              mx: "@2",
+              mb: "@3",
+            }}
+          >
             <Box as="label" css={{ fontWeight: 700, mb: "@1" }}>
               Token ID
             </Box>
@@ -172,7 +187,7 @@ export default function Home() {
             />
           </Box>
 
-          <Box css={{ alignSelf: "flex-end" }}>or</Box>
+          <Box css={{ alignSelf: "flex-end", mb: "@3" }}>or</Box>
           <Box
             as="button"
             css={{
@@ -187,6 +202,7 @@ export default function Home() {
               fontSize: "@0",
               fontWeight: 700,
               mx: "@2",
+              mb: "@3",
               cursor: "pointer",
             }}
             onClick={() => setRandomNFT(sample(previewNFTs))}
