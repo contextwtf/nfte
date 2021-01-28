@@ -9,4 +9,6 @@ export default [
   { contract: "0xb80fbf6cdb49c33dc6ae4ca11af8ac47b0b4c0f3", tokenId: "149" },
   // Zora
   { contract: "0xabefbc9fd2f806065b4f3c237d4b59d9a97bcac7", tokenId: "0" },
+  // James Owen (SuperRare)
+  { contract: "0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0", tokenId: "17158" },
 ]
