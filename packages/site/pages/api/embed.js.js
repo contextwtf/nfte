@@ -23,8 +23,6 @@ function embedScript(markup, css) {
 export default allowCORS(async function handler(req, res) {
   const { contract, tokenId, darkMode } = req.query
 
-  console.log(contract)
-
   if (!contract || !tokenId) {
     return res
       .status(400)
