@@ -241,8 +241,9 @@ export default function Home() {
             code={`<div className="nft-embed"></div>
 <script
   async
-  src="https://nfte.app/api/embed.js?
-  contract={contract address}&tokenId={token ID}">
+  src="https://nfte.app/api/embed.js?contract=${
+    contract.length > 0 ? contract : "CONTRACT_ADDRESS"
+  }&tokenId=${tokenId.length > 0 ? tokenId : "TOKEN_ID"}">
 </script>`}
           />
         </Box>
@@ -256,7 +257,9 @@ export default function Home() {
           <CodeBlock
             code={`import { NFTE } from '@nfte/react';
 
-<NFTE contract="0x..." tokenId="1"/>`}
+<NFTE contract="${contract.length > 0 ? contract : "0x..."}" tokenId="${
+              tokenId.length > 0 ? tokenId : "1"
+            }"/>`}
           />
         </Box>
 
