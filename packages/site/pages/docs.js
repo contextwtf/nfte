@@ -217,7 +217,6 @@ export default function Docs() {
             <InlineCode>{`{ contract,
           tokenId,
           metadata,
-          symbol, 
           creatorOfAddress }`}</InlineCode>
             .
           </Box>
@@ -244,7 +243,6 @@ export default function Docs() {
             <InlineCode>{`{ contract,
           tokenId,
           metadata,
-          symbol, 
           creatorOfAddress }`}</InlineCode>
             .
           </Box>
@@ -292,7 +290,6 @@ export default function Docs() {
             <InlineCode>{`{ contract,
           tokenId,
           metadata,
-          symbol,
           creatorOfAddress }`}</InlineCode>
             .
           </Box>
@@ -494,7 +491,6 @@ export default function Docs() {
                 {`<{ contract,
           tokenId,
           metadata,
-          symbol, 
           creatorOfAddress }>`}
               </strong>{" "}
               Should return the name of the creator on the project or platform
@@ -506,7 +502,6 @@ export default function Docs() {
                 {`<{ contract,
           tokenId,
           metadata,
-          symbol, 
           creatorOfAddress }>`}
               </strong>{" "}
               Should return the url of the creators profile page on the project
@@ -519,7 +514,6 @@ export default function Docs() {
                 {`<{ contract,
           tokenId,
           metadata,
-          symbol, 
           creatorOfAddress }>`}
               </strong>{" "}
               Should return the url of the media file. If you are using the
@@ -534,7 +528,6 @@ export default function Docs() {
                 {`<{ contract,
           tokenId,
           metadata,
-          symbol,
           creatorOfAddress }>`}
               </strong>{" "}
               Should return the url of the tokens page on the project or
@@ -555,6 +548,81 @@ export default function Docs() {
             </Box>
           </InlineCode>{" "}
           file.
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <strong>(Optional)</strong> If your contract is a non-standard NFT
+          contract e.g CryptoPunks, then you can still use NFTE, first off add
+          the ABI at
+          <InlineCode>
+            <Box
+              as="a"
+              href="https://github.com/sammdec/nfte/tree/main/packages/site/abis"
+              css={{ textDecoration: "underline", color: "currentColor" }}
+            >
+              packages/site/abis
+            </Box>
+          </InlineCode>{" "}
+          folder, export it to the index.js file and add the{" "}
+          <InlineCode>abi</InlineCode> property that matches the name of your
+          export.
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          The next step is to use the <InlineCode>getContractData</InlineCode>{" "}
+          function to get the various pieces of information that are needed the
+          function should return an object with the following properties.
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>tokenURI</InlineCode> - This should be a url that points
+          to the specific metadata of the tokenId
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>ownerOfAddress</InlineCode> - This should be the Ethereum
+          address of the current owner of the token
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>creatorOfAddress</InlineCode> - This should be the
+          Ethereum address of the creator of the token
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>blockNumber</InlineCode> - The blockNumber when the token
+          was minted
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>timestamp</InlineCode> - A unix timestamp when the token
+          was minted.
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          You can see the canonical ERC-721 example here{" "}
+          <InlineCode>
+            <Box
+              as="a"
+              href="https://github.com/sammdec/nfte/tree/main/packages/site/utils/getNFTData.js#L11"
+              css={{ textDecoration: "underline", color: "currentColor" }}
+            >
+              packages/site/utils/getNFTData.js
+            </Box>
+          </InlineCode>
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          An example of how CryptoPunks is integrated can be found here{" "}
+          <InlineCode>
+            <Box
+              as="a"
+              href="https://github.com/sammdec/nfte/tree/main/packages/site/knownContracts/cryptoPunks.js"
+              css={{ textDecoration: "underline", color: "currentColor" }}
+            >
+              packages/site/knownContracts/cryptoPunks.js
+            </Box>
+          </InlineCode>
         </Box>
 
         <Footer />

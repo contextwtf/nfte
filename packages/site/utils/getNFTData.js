@@ -1,11 +1,46 @@
 import { ethers, BigNumber, utils } from "ethers"
 import { fromUnixTime, format } from "date-fns"
+import { zonedTimeToUtc } from "date-fns-tz"
 import get from "lodash/get"
 import has from "lodash/has"
-import erc721ABI from "@utils/erc721ABI"
 import knownContracts from "knownContracts"
+import abis from "abis"
 import isIPFS from "@utils/isIPFS"
 import makeIPFSUrl from "@utils/makeIPFSUrl"
+
+const defaultGetContractData = async ({
+  Contract,
+  ContractHistorical,
+  tokenId,
+}) => {
+  const tokenURIProm = Contract.tokenURI(tokenId)
+  const ownerOfProm = Contract.ownerOf(tokenId)
+  const eventProm = ContractHistorical.filters.Transfer(
+    null,
+    null,
+    BigNumber.from(tokenId)
+  )
+  const promises = await Promise.allSettled([
+    tokenURIProm,
+    ownerOfProm,
+    eventProm,
+  ])
+
+  const [tokenURI, ownerOfAddress, event] = promises
+
+  const logs = await ContractHistorical.queryFilter(event.value, 0)
+  const creatorOfAddress = logs[0].args.to
+  const blockNumber = logs[0].blockNumber
+  const timestamp = (await logs[0].getBlock()).timestamp
+
+  return {
+    tokenURI: tokenURI.value,
+    ownerOfAddress: ownerOfAddress.value,
+    creatorOfAddress,
+    blockNumber,
+    timestamp,
+  }
+}
 
 export default async function ({ contract, tokenId }) {
   const provider = new ethers.providers.CloudflareProvider()
@@ -18,43 +53,47 @@ export default async function ({ contract, tokenId }) {
 
   if (!isValidAddress) throw Error("not a valid address")
 
-  const erc721 = new ethers.Contract(contract, erc721ABI, provider)
-  const erc721Historical = new ethers.Contract(
-    contract,
-    erc721ABI,
-    historicalProvider
-  )
-
   try {
-    const symbolProm = erc721.symbol()
-    const tokenURIProm = erc721.tokenURI(tokenId)
-    const ownerOfProm = erc721.ownerOf(tokenId)
-    const eventProm = erc721Historical.filters.Transfer(
-      ethers.constants.AddressZero,
-      null,
-      BigNumber.from(tokenId)
+    // Find a known contract from known contracts
+    const knownContract = knownContracts.filter((p) =>
+      p.addresses.map(utils.getAddress).includes(utils.getAddress(contract))
+    )[0]
+
+    // If this is a non standard erc721 contract and a ABI has been provided use that one
+    const abi = has(knownContract, "abi")
+      ? abis[knownContract.abi]
+      : abis.erc721
+
+    const Contract = new ethers.Contract(contract, abi, provider)
+    const ContractHistorical = new ethers.Contract(
+      contract,
+      abi,
+      historicalProvider
     )
-    const promises = await Promise.allSettled([
-      symbolProm,
-      tokenURIProm,
-      ownerOfProm,
-      eventProm,
-    ])
 
-    const [symbol, tokenURI, ownerOfAddress, event] = promises
+    const contractData = has(knownContract, "getContractData")
+      ? await knownContract.getContractData({
+          Contract,
+          ContractHistorical,
+          tokenId,
+        })
+      : await defaultGetContractData({ Contract, ContractHistorical, tokenId })
 
-    const ownerEns = await provider.lookupAddress(ownerOfAddress.value)
-    const logs = await erc721Historical.queryFilter(event.value, 0)
-    const creatorOfAddress = logs[0].args.to
+    const {
+      tokenURI,
+      ownerOfAddress,
+      creatorOfAddress,
+      blockNumber,
+      timestamp,
+    } = contractData
+
+    const ownerOfEns = await provider.lookupAddress(ownerOfAddress)
     const creatorOfEns = await provider.lookupAddress(creatorOfAddress)
-    const blockNumber = logs[0].blockNumber
-    const timestamp = (await logs[0].getBlock()).timestamp
 
-    const resolvedTokenURI = isIPFS(tokenURI.value)
-      ? makeIPFSUrl(tokenURI.value)
-      : tokenURI.value
+    const resolvedTokenURI = isIPFS(tokenURI) ? makeIPFSUrl(tokenURI) : tokenURI
 
     const r = await fetch(resolvedTokenURI)
+
     const mimeType = r.headers.get("Content-Type")
     let metadata
 
@@ -72,12 +111,7 @@ export default async function ({ contract, tokenId }) {
       metadata = { image: resolvedTokenURI }
     }
 
-    // console.log(metadata)
-
-    // Find a known contract from known contracts
-    const knownContract = knownContracts.filter((p) =>
-      p.addresses.map(utils.getAddress).includes(utils.getAddress(contract))
-    )[0]
+    console.log(metadata)
 
     // If there is a known contract and the property mediaUrl is set otherwise fallback to standard .image property
     const mediaUrl = has(knownContract, "mediaUrl")
@@ -85,7 +119,6 @@ export default async function ({ contract, tokenId }) {
           contract,
           tokenId,
           metadata,
-          symbol: symbol.value,
           creatorOfAddress,
         })
       : metadata.image
@@ -97,7 +130,6 @@ export default async function ({ contract, tokenId }) {
           contract,
           tokenId,
           metadata,
-          symbol: symbol.value,
           creatorOfAddress,
         })
       : `https://etherscan.io/address/${contract}?a=${tokenId}`
@@ -108,7 +140,6 @@ export default async function ({ contract, tokenId }) {
           contract,
           tokenId,
           metadata,
-          symbol: symbol.value,
           creatorOfAddress,
         })
       : creatorOfEns ?? creatorOfAddress
@@ -119,13 +150,12 @@ export default async function ({ contract, tokenId }) {
           contract,
           tokenId,
           metadata,
-          symbol: symbol.value,
           creatorOfAddress,
         })
       : `https://etherscan.io/address/${creatorOfAddress}`
 
-    const ownerOf = ownerEns ?? ownerOfAddress.value
-    const ownerOfUrl = `https://etherscan.io/address/${ownerOfAddress.value}`
+    const ownerOf = ownerOfEns ?? ownerOfAddress
+    const ownerOfUrl = `https://etherscan.io/address/${ownerOfAddress}`
 
     const mintedBy = get(knownContract, "name", contract)
     const mintedByUrl = get(
@@ -142,13 +172,15 @@ export default async function ({ contract, tokenId }) {
       ownerOfUrl,
       creatorOf,
       creatorOfUrl,
-      symbol: symbol.value,
       mintedBy,
       mintedByUrl,
       media: media,
       mediaPageUrl,
       blockNumber,
-      timestamp: format(fromUnixTime(timestamp), "dd/MM/yyyy HH:mm"),
+      timestamp: format(
+        zonedTimeToUtc(fromUnixTime(timestamp)),
+        "dd/MM/yyyy HH:mm"
+      ),
     }
   } catch (e) {
     console.log(e)
