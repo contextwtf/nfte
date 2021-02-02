@@ -2,19 +2,22 @@
 
 export default {
   addresses: [""],
-  name: "",
-  homepage: "",
-  creatorOf: () => "",
-  creatorOfPageUrl: () => "",
-  mediaUrl: () => "",
-  mediaPageUrl: () => "",
-  // The following is only required if your contract is a non standard ERC-721 contract
+  // ABI is not required if its a standard ERC-721 token
   abi: "",
-  getContractData: () => ({
-    tokenURI: ``,
-    ownerOfAddress: "",
-    creatorOfAddress: "",
-    blockNumber: "",
-    timestamp: "",
-  }),
+  getContractData: ({ Contract, ContractHistorical, tokenId }) => {
+    return {
+      metadata: {},
+      name: null,
+      description: null,
+      ownerOf: null,
+      ownerOfUrl: null,
+      creatorOf: null,
+      creatorOfUrl: null,
+      mediaUrl: null,
+      mediaPageUrl: null,
+      platform: "",
+      platformUrl: "",
+      blockNumber,
+    }
+  },
 }
