@@ -80,8 +80,6 @@ export default async function ({ contract, tokenId }) {
       p.addresses.map(utils.getAddress).includes(utils.getAddress(contract))
     )[0]
 
-    console.log(knownContract)
-
     // If this is a non standard erc721 contract and a ABI has been provided use that one
     const abi = knownContract?.abi ?? erc721ABI
 
@@ -114,8 +112,6 @@ export default async function ({ contract, tokenId }) {
       platformUrl,
       blockNumber,
     } = contractData
-
-    console.log(contractData)
 
     // If there is a known contract and .mediaPageUrl is set otherwise use etherscan
     const resolvedMediaPageUrl =

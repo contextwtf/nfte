@@ -134,7 +134,7 @@ export function NFTE({
 
       if (r.ok) {
         const data = await r.json()
-        console.log(data)
+        // console.log(data)
         setData(data)
       }
     }
