@@ -1,6 +1,6 @@
 {
   "name": "@nfte/site",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "author": "Sam Mason de Caires <sam.jbmason@gmail.com>",
@@ -10,7 +10,7 @@
     "dev": "next dev"
   },
   "dependencies": {
-    "@nfte/react": "^0.0.4",
+    "@nfte/react": "^0.1.0",
     "@stitches/react": "^0.0.2",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
