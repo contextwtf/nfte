@@ -188,7 +188,7 @@ export default function Docs() {
           next section.
         </Box>
 
-        <Box as="img" src="/nfte.png" css={{ maxWidth: "100%", mb: "@2" }} />
+        <Box as="img" src="/nfte.png" css={{ maxWidth: "100%", mb: "@4" }} />
 
         <Box css={{ mb: "@3" }}>
           <Box as="p" css={{ fontWeight: 700, fontSize: "@2", m: 0 }}>
@@ -208,17 +208,11 @@ export default function Docs() {
           </Box>
           <Box as="p" css={{ m: 0, mb: "@1" }}>
             <Box as="span" css={{ fontWeight: 700 }}>
-              Platorm
+              Platform
             </Box>{" "}
             - will show the creators platform username if a known contract file
-            is found and the <InlineCode>creatorOf</InlineCode> is set. The
-            property takes a function and the following data is passed as the
-            argument{" "}
-            <InlineCode>{`{ contract,
-          tokenId,
-          metadata,
-          creatorOfAddress }`}</InlineCode>
-            .
+            is found and the <InlineCode>getContractData</InlineCode> function
+            returns a value for<InlineCode>creatorOf</InlineCode>.
           </Box>
         </Box>
 
@@ -237,14 +231,8 @@ export default function Docs() {
               Platform
             </Box>{" "}
             - links to the creators profile on the platform if a known contract
-            file is found and a value is present for{" "}
-            <InlineCode>creatorOfPageUrl</InlineCode>. The property takes a
-            function and the following data is passed as the argument{" "}
-            <InlineCode>{`{ contract,
-          tokenId,
-          metadata,
-          creatorOfAddress }`}</InlineCode>
-            .
+            file is found and the <InlineCode>getContractData</InlineCode>{" "}
+            function returns a value for<InlineCode>creatorOfUrl</InlineCode>.
           </Box>
         </Box>
 
@@ -263,15 +251,15 @@ export default function Docs() {
             <Box as="span" css={{ fontWeight: 700 }}>
               Platform
             </Box>{" "}
-            - will use media from another location in the metadata if a known
-            contract file is found and <InlineCode>mediaPath</InlineCode> is set
-            to a corresponding value in the metadata.
+            - will be the URL to the NFT's media file if a known contract file
+            is found and the <InlineCode>getContractData</InlineCode> function
+            returns a value for<InlineCode>mediaUrl</InlineCode>.
           </Box>
         </Box>
 
         <Box css={{ mb: "@3" }}>
           <Box as="p" css={{ fontWeight: 700, fontSize: "@2", m: 0 }}>
-            Media URL
+            MediaPageURL
           </Box>
           <Box as="p" css={{ m: 0, mb: "@1" }}>
             <Box as="span" css={{ fontWeight: 700 }}>
@@ -283,15 +271,10 @@ export default function Docs() {
             <Box as="span" css={{ fontWeight: 700 }}>
               Platform
             </Box>{" "}
-            - links to the media profile on the platform if a known contract
-            file is found and a value is present for{" "}
-            <InlineCode>mediaPageUrl</InlineCode>. The property takes a function
-            and the following data is passed as the argument{" "}
-            <InlineCode>{`{ contract,
-          tokenId,
-          metadata,
-          creatorOfAddress }`}</InlineCode>
-            .
+            - will be the URL to the NFT's page on the platform if a known
+            contract file is found and the{" "}
+            <InlineCode>getContractData</InlineCode> function returns a value
+            for<InlineCode>mediaPageUrl</InlineCode>.
           </Box>
         </Box>
 
@@ -306,6 +289,14 @@ export default function Docs() {
             - will use the ERC-721 standard <InlineCode>name</InlineCode>{" "}
             property from the metadata
           </Box>
+          <Box as="p" css={{ m: 0, mb: "@1" }}>
+            <Box as="span" css={{ fontWeight: 700 }}>
+              Platform
+            </Box>{" "}
+            - will be the name of the NFT if a known contract file is found. The{" "}
+            <InlineCode>getContractData</InlineCode> function should return a
+            value for<InlineCode>name</InlineCode>.
+          </Box>
         </Box>
 
         <Box css={{ mb: "@3" }}>
@@ -316,8 +307,16 @@ export default function Docs() {
             <Box as="span" css={{ fontWeight: 700 }}>
               Base data
             </Box>{" "}
-            - will use path <InlineCode>description</InlineCode> property from
-            the metadata
+            - will use the ERC-721 standard <InlineCode>description</InlineCode>{" "}
+            property from the metatdata.
+          </Box>
+          <Box as="p" css={{ m: 0, mb: "@1" }}>
+            <Box as="span" css={{ fontWeight: 700 }}>
+              Platform
+            </Box>{" "}
+            - will be the description of the NFT if a known contract file is
+            found. The <InlineCode>getContractData</InlineCode> function should
+            return a value for<InlineCode>description</InlineCode>.
           </Box>
         </Box>
 
@@ -337,6 +336,14 @@ export default function Docs() {
             </Box>{" "}
             - will show the owners ENS name if one exists on the address
           </Box>
+          <Box as="p" css={{ m: 0, mb: "@1" }}>
+            <Box as="span" css={{ fontWeight: 700 }}>
+              Platform
+            </Box>{" "}
+            - will show the owners platform username if a known contract file is
+            found and the <InlineCode>getContractData</InlineCode> function
+            returns a value for<InlineCode>ownerOf</InlineCode>.
+          </Box>
         </Box>
 
         <Box css={{ mb: "@3" }}>
@@ -349,11 +356,21 @@ export default function Docs() {
             </Box>{" "}
             - links to the current owners address on Etherscan
           </Box>
+
+          <Box as="p" css={{ m: 0, mb: "@1" }}>
+            <Box as="span" css={{ fontWeight: 700 }}>
+              Platform
+            </Box>{" "}
+            - will link to the current owners profile on the platform if a known
+            contract file is found and the{" "}
+            <InlineCode>getContractData</InlineCode> function returns a value
+            for<InlineCode>ownerOfUrl</InlineCode>.
+          </Box>
         </Box>
 
         <Box css={{ mb: "@3" }}>
           <Box as="p" css={{ fontWeight: 700, fontSize: "@2", m: 0 }}>
-            Minted By
+            Platform
           </Box>
           <Box as="p" css={{ m: 0, mb: "@1" }}>
             <Box as="span" css={{ fontWeight: 700 }}>
@@ -366,15 +383,15 @@ export default function Docs() {
             <Box as="span" css={{ fontWeight: 700 }}>
               Platform
             </Box>{" "}
-            - will use the platform name specified in the known contracts file{" "}
-            <InlineCode>name</InlineCode> property if a known contracts file is
-            found
+            - will show the platform name if a known contract file is found and
+            the <InlineCode>getContractData</InlineCode> function returns a
+            value for<InlineCode>platform</InlineCode>.
           </Box>
         </Box>
 
         <Box css={{ mb: "@3" }}>
           <Box as="p" css={{ fontWeight: 700, fontSize: "@2", m: 0 }}>
-            Minted By URL
+            Platform URL
           </Box>
           <Box as="p" css={{ m: 0, mb: "@1" }}>
             <Box as="span" css={{ fontWeight: 700 }}>
@@ -386,8 +403,9 @@ export default function Docs() {
             <Box as="span" css={{ fontWeight: 700 }}>
               Platform
             </Box>{" "}
-            - links to the platforms home page if a known contracts file is
-            found and contains the <InlineCode>homepage</InlineCode> property.
+            - will link to platforms homepage if a known contract file is found
+            and the <InlineCode>getContractData</InlineCode> function returns a
+            value for<InlineCode>platformUrl</InlineCode>.
           </Box>
         </Box>
 
@@ -468,7 +486,8 @@ export default function Docs() {
         </Box>
 
         <Box css={{ m: 0, mb: "@3" }}>
-          2. The contents can be any of the following properties
+          2. The contents should be an object that contains the following
+          properties
           <Box as="ul" css={{ pl: "@3", mb: "@4", mt: "@1" }}>
             <Box as="li" css={{ mb: "@1" }}>
               <InlineCode>addresses</InlineCode> -{" "}
@@ -476,62 +495,14 @@ export default function Docs() {
               contract addresses that mint the NFTs for your project
             </Box>
             <Box as="li" css={{ mb: "@1" }}>
-              <InlineCode>name</InlineCode> - <strong>string</strong> The name
-              of the project or platform as you would like it displayed in the
-              embed
+              <InlineCode>abi</InlineCode> - <strong>string</strong> If the
+              contract extends the ERC-721 functionality you should upload the
+              abi here.
             </Box>
             <Box as="li" css={{ mb: "@1" }}>
-              <InlineCode>homepage</InlineCode> - <strong>string</strong> The
-              homepage URL of your project or platform
-            </Box>
-            <Box as="li" css={{ mb: "@1" }}>
-              <InlineCode>creatorOf</InlineCode> -{" "}
-              <strong>
-                function{" "}
-                {`<{ contract,
-          tokenId,
-          metadata,
-          creatorOfAddress }>`}
-              </strong>{" "}
-              Should return the name of the creator on the project or platform
-            </Box>
-            <Box as="li" css={{ mb: "@1" }}>
-              <InlineCode>creatorOfPageUrl</InlineCode> -{" "}
-              <strong>
-                function{" "}
-                {`<{ contract,
-          tokenId,
-          metadata,
-          creatorOfAddress }>`}
-              </strong>{" "}
-              Should return the url of the creators profile page on the project
-              or platform
-            </Box>
-            <Box as="li" css={{ mb: "@1" }}>
-              <InlineCode>mediaUrl</InlineCode> -{" "}
-              <strong>
-                function{" "}
-                {`<{ contract,
-          tokenId,
-          metadata,
-          creatorOfAddress }>`}
-              </strong>{" "}
-              Should return the url of the media file. If you are using the
-              ERC-721 <InlineCode>image</InlineCode> standard property this
-              property is not required
-            </Box>
-
-            <Box as="li" css={{ mb: "@1" }}>
-              <InlineCode>mediaPageUrl</InlineCode> -{" "}
-              <strong>
-                function{" "}
-                {`<{ contract,
-          tokenId,
-          metadata,
-          creatorOfAddress }>`}
-              </strong>{" "}
-              Should return the url of the tokens page on the project or
-              platform
+              <InlineCode>getContractData</InlineCode> -{" "}
+              <strong>function</strong> A function that returns the values used
+              in the embed.
             </Box>
           </Box>
         </Box>
@@ -551,52 +522,69 @@ export default function Docs() {
         </Box>
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
-          <strong>(Optional)</strong> If your contract is a non-standard NFT
-          contract e.g CryptoPunks, then you can still use NFTE, first off add
-          the ABI at
-          <InlineCode>
-            <Box
-              as="a"
-              href="https://github.com/sammdec/nfte/tree/main/packages/site/abis"
-              css={{ textDecoration: "underline", color: "currentColor" }}
-            >
-              packages/site/abis
-            </Box>
-          </InlineCode>{" "}
-          folder, export it to the index.js file and add the{" "}
-          <InlineCode>abi</InlineCode> property that matches the name of your
-          export.
+          4. The next step is to use the{" "}
+          <InlineCode>getContractData</InlineCode> function to get the various
+          pieces of information that are needed, the function contains 2
+          ethers.js instances, <InlineCode>Contract</InlineCode> uses the
+          Cloudflare provider and should be used for the majority of functions.{" "}
+          <InlineCode>ContractHistorical</InlineCode> uses an Infura provider
+          and should be used for occassions where past block history is needed.
+          The <InlineCode>tokenId</InlineCode> is also passed in as a string
+          value. The function should return an object with the following
+          properties.
         </Box>
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
-          The next step is to use the <InlineCode>getContractData</InlineCode>{" "}
-          function to get the various pieces of information that are needed the
-          function should return an object with the following properties.
+          <InlineCode>name</InlineCode> - This should be the name of the
+          creation
         </Box>
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
-          <InlineCode>tokenURI</InlineCode> - This should be a url that points
-          to the specific metadata of the tokenId
+          <InlineCode>description</InlineCode> - This should resolve to the
+          description if any
         </Box>
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
-          <InlineCode>ownerOfAddress</InlineCode> - This should be the Ethereum
-          address of the current owner of the token
+          <InlineCode>ownerOf</InlineCode> - This should be the Ethereum address
+          of the current owner of the token
         </Box>
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
-          <InlineCode>creatorOfAddress</InlineCode> - This should be the
-          Ethereum address of the creator of the token
+          <InlineCode>ownerOfUrl</InlineCode> - The url that points to the
+          owners profile on the platform
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>creatorOf</InlineCode> - This should be the Ethereum
+          address of the creator of the token
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>creatorOfUrl</InlineCode> - The url that points to the
+          creators profile on the platform
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>mediaUrl</InlineCode> - The url of the media file
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>mediaPageUrl</InlineCode> - The url of the media files
+          page on the platform
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>platform</InlineCode> - The name of the platform
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>platformUrl</InlineCode> - The url to the platforms
+          homepage
         </Box>
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
           <InlineCode>blockNumber</InlineCode> - The blockNumber when the token
           was minted
-        </Box>
-
-        <Box as="p" css={{ m: 0, mb: "@3" }}>
-          <InlineCode>timestamp</InlineCode> - A unix timestamp when the token
-          was minted.
         </Box>
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>
@@ -608,19 +596,6 @@ export default function Docs() {
               css={{ textDecoration: "underline", color: "currentColor" }}
             >
               packages/site/utils/getNFTData.js
-            </Box>
-          </InlineCode>
-        </Box>
-
-        <Box as="p" css={{ m: 0, mb: "@3" }}>
-          An example of how CryptoPunks is integrated can be found here{" "}
-          <InlineCode>
-            <Box
-              as="a"
-              href="https://github.com/sammdec/nfte/tree/main/packages/site/knownContracts/cryptoPunks.js"
-              css={{ textDecoration: "underline", color: "currentColor" }}
-            >
-              packages/site/knownContracts/cryptoPunks.js
             </Box>
           </InlineCode>
         </Box>
