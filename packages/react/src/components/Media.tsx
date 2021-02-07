@@ -24,6 +24,10 @@ function Video({ media }: { media: string }) {
   )
 }
 
+function Audio({ media }: { media: string }) {
+  return <audio className="nfte__media-content" controls src={media}></audio>
+}
+
 export default function Media({ media }: { media: string }) {
   const [mimeType, setMimeType] = useState<string | null>(null)
 
@@ -33,10 +37,11 @@ export default function Media({ media }: { media: string }) {
     )
   }, [])
 
-  console.log(media, mimeType)
   if (mimeType?.includes("text")) return <Text media={media} />
 
   if (mimeType?.includes("video")) return <Video media={media} />
+
+  if (mimeType?.includes("audio")) return <Audio media={media} />
 
   return <img className="nfte__media-content" src={media} />
 }
