@@ -13,6 +13,7 @@
     "@nfte/react": "^0.0.4",
     "@stitches/react": "^0.0.2",
     "date-fns": "^2.16.1",
+    "date-fns-tz": "^1.0.12",
     "ethers": "^5.0.26",
     "fathom-client": "^3.0.0",
     "is-ipfs": "^2.0.0",

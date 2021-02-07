@@ -1,154 +1,159 @@
 import { ethers, BigNumber, utils } from "ethers"
 import { fromUnixTime, format } from "date-fns"
-import get from "lodash/get"
+import { zonedTimeToUtc } from "date-fns-tz"
 import has from "lodash/has"
-import erc721ABI from "@utils/erc721ABI"
 import knownContracts from "knownContracts"
+import erc721ABI from "abis/erc721"
 import isIPFS from "@utils/isIPFS"
 import makeIPFSUrl from "@utils/makeIPFSUrl"
 
-export default async function ({ contract, tokenId }) {
-  const provider = new ethers.providers.CloudflareProvider()
-  const historicalProvider = new ethers.providers.InfuraProvider(
+const provider = new ethers.providers.CloudflareProvider()
+const historicalProvider = new ethers.providers.InfuraProvider(
+  null,
+  process.env.INFURA_PROJECT_ID
+)
+
+async function getAddress(value) {
+  if (utils.isAddress(value)) {
+    return (await provider.lookupAddress(value)) ?? value
+  }
+  return value
+}
+
+async function defaultGetContractData({
+  Contract,
+  ContractHistorical,
+  tokenId,
+}) {
+  const tokenURIProm = Contract.tokenURI(tokenId)
+  const ownerOfProm = Contract.ownerOf(tokenId)
+  const eventProm = ContractHistorical.filters.Transfer(
     null,
-    process.env.INFURA_PROJECT_ID
+    null,
+    BigNumber.from(tokenId)
   )
+  const promises = await Promise.allSettled([
+    tokenURIProm,
+    ownerOfProm,
+    eventProm,
+  ])
 
-  const isValidAddress = utils.isAddress(contract)
+  const [tokenURI, ownerOfAddress, event] = promises
 
-  if (!isValidAddress) throw Error("not a valid address")
+  const logs = await ContractHistorical.queryFilter(event.value, 0)
+  const creatorOf = logs[0].args.to
+  const blockNumber = logs[0].blockNumber
 
-  const erc721 = new ethers.Contract(contract, erc721ABI, provider)
-  const erc721Historical = new ethers.Contract(
-    contract,
-    erc721ABI,
-    historicalProvider
-  )
+  const resolvedTokenURI = isIPFS(tokenURI.value)
+    ? makeIPFSUrl(tokenURI.value)
+    : tokenURI.value
+
+  const tokenURIRes = await fetch(resolvedTokenURI)
+  const metadata = await tokenURIRes.json()
+
+  const mediaUrl = isIPFS(metadata?.image)
+    ? makeIPFSUrl(metadata?.image)
+    : metadata?.image
+
+  return {
+    metadata,
+    name: metadata?.name,
+    description: metadata?.description,
+    ownerOf: ownerOfAddress.value,
+    ownerOfUrl: null,
+    creatorOf,
+    creatorOfUrl: null,
+    mediaUrl,
+    mediaPageUrl: null,
+    platform: null,
+    platformUrl: null,
+    blockNumber,
+  }
+}
+
+export default async function ({ contract, tokenId }) {
+  if (!utils.isAddress(contract)) throw Error("not a valid address")
 
   try {
-    const symbolProm = erc721.symbol()
-    const tokenURIProm = erc721.tokenURI(tokenId)
-    const ownerOfProm = erc721.ownerOf(tokenId)
-    const eventProm = erc721Historical.filters.Transfer(
-      ethers.constants.AddressZero,
-      null,
-      BigNumber.from(tokenId)
-    )
-    const promises = await Promise.allSettled([
-      symbolProm,
-      tokenURIProm,
-      ownerOfProm,
-      eventProm,
-    ])
-
-    const [symbol, tokenURI, ownerOfAddress, event] = promises
-
-    const ownerEns = await provider.lookupAddress(ownerOfAddress.value)
-    const logs = await erc721Historical.queryFilter(event.value, 0)
-    const creatorOfAddress = logs[0].args.to
-    const creatorOfEns = await provider.lookupAddress(creatorOfAddress)
-    const blockNumber = logs[0].blockNumber
-    const timestamp = (await logs[0].getBlock()).timestamp
-
-    const resolvedTokenURI = isIPFS(tokenURI.value)
-      ? makeIPFSUrl(tokenURI.value)
-      : tokenURI.value
-
-    const r = await fetch(resolvedTokenURI)
-    const mimeType = r.headers.get("Content-Type")
-    let metadata
-
-    // Handle various types of metadata
-    // Handle json usecase
-    if (mimeType.includes("json")) {
-      metadata = await r.json()
-    }
-    // Handle directly returning plain text
-    else if (mimeType.includes("text/plain")) {
-      metadata = { image: await r.text() }
-    }
-    // Handle return where tokenURI is the asset
-    else {
-      metadata = { image: resolvedTokenURI }
-    }
-
-    // console.log(metadata)
-
     // Find a known contract from known contracts
     const knownContract = knownContracts.filter((p) =>
       p.addresses.map(utils.getAddress).includes(utils.getAddress(contract))
     )[0]
 
-    // If there is a known contract and the property mediaUrl is set otherwise fallback to standard .image property
-    const mediaUrl = has(knownContract, "mediaUrl")
-      ? knownContract?.mediaUrl({
-          contract,
+    // If this is a non standard erc721 contract and a ABI has been provided use that one
+    const abi = knownContract?.abi ?? erc721ABI
+
+    const Contract = new ethers.Contract(contract, abi, provider)
+    const ContractHistorical = new ethers.Contract(
+      contract,
+      abi,
+      historicalProvider
+    )
+
+    const contractData = has(knownContract, "getContractData")
+      ? await knownContract.getContractData({
+          Contract,
+          ContractHistorical,
           tokenId,
-          metadata,
-          symbol: symbol.value,
-          creatorOfAddress,
         })
-      : metadata.image
-    const media = isIPFS(mediaUrl) ? makeIPFSUrl(mediaUrl) : mediaUrl
+      : await defaultGetContractData({ Contract, ContractHistorical, tokenId })
+
+    const {
+      metadata,
+      name,
+      description,
+      ownerOf,
+      ownerOfUrl,
+      creatorOf,
+      creatorOfUrl,
+      mediaUrl,
+      mediaPageUrl,
+      platform,
+      platformUrl,
+      blockNumber,
+    } = contractData
 
     // If there is a known contract and .mediaPageUrl is set otherwise use etherscan
-    const mediaPageUrl = has(knownContract, "mediaPageUrl")
-      ? knownContract?.mediaPageUrl({
-          contract,
-          tokenId,
-          metadata,
-          symbol: symbol.value,
-          creatorOfAddress,
-        })
-      : `https://etherscan.io/address/${contract}?a=${tokenId}`
+    const resolvedMediaPageUrl =
+      mediaPageUrl ?? `https://etherscan.io/address/${contract}?a=${tokenId}`
 
     // if known contract and has .creatorName set otherwise try ENS else fallback to address
-    const creatorOf = has(knownContract, "creatorOf")
-      ? knownContract?.creatorOf({
-          contract,
-          tokenId,
-          metadata,
-          symbol: symbol.value,
-          creatorOfAddress,
-        })
-      : creatorOfEns ?? creatorOfAddress
+    const resolvedCreatorOf = await getAddress(creatorOf)
+    // if known contract and has .creatorOfUrl set otherwise use etherscan
+    const resolvedCreatorOfUrl =
+      creatorOfUrl ?? `https://etherscan.io/address/${creatorOf}`
 
-    // if known contract and has .creatorPageUrl set otherwise use etherscan
-    const creatorOfUrl = has(knownContract, "creatorOfPageUrl")
-      ? knownContract?.creatorOfPageUrl({
-          contract,
-          tokenId,
-          metadata,
-          symbol: symbol.value,
-          creatorOfAddress,
-        })
-      : `https://etherscan.io/address/${creatorOfAddress}`
+    const resolvedOwnerOf = await getAddress(ownerOf)
+    const resolvedOwnerOfUrl =
+      ownerOfUrl ?? `https://etherscan.io/address/${ownerOf}`
 
-    const ownerOf = ownerEns ?? ownerOfAddress.value
-    const ownerOfUrl = `https://etherscan.io/address/${ownerOfAddress.value}`
+    const resolvedPlatform = platform ?? contract
+    const resolvedPlatformUrl =
+      platformUrl ?? `https://etherscan.io/address/${contract}`
 
-    const mintedBy = get(knownContract, "name", contract)
-    const mintedByUrl = get(
-      knownContract,
-      "homepage",
-      `https://etherscan.io/address/${contract}`
-    )
+    const timestamp = (await historicalProvider.getBlock(blockNumber))
+      ?.timestamp
 
     return {
       contract,
       tokenId,
       metadata,
-      ownerOf,
-      ownerOfUrl,
-      creatorOf,
-      creatorOfUrl,
-      symbol: symbol.value,
-      mintedBy,
-      mintedByUrl,
-      media: media,
-      mediaPageUrl,
+      name,
+      description,
+      ownerOf: resolvedOwnerOf,
+      ownerOfUrl: resolvedOwnerOfUrl,
+      creatorOf: resolvedCreatorOf,
+      creatorOfUrl: resolvedCreatorOfUrl,
+      platform: resolvedPlatform,
+      platformUrl: resolvedPlatformUrl,
+      mediaUrl,
+      mediaPageUrl: resolvedMediaPageUrl,
       blockNumber,
-      timestamp: format(fromUnixTime(timestamp), "dd/MM/yyyy HH:mm"),
+      timestamp,
+      // deprecated
+      media: mediaUrl,
+      mintedBy: resolvedPlatform,
+      mintedByUrl: resolvedPlatformUrl,
     }
   } catch (e) {
     console.log(e)

@@ -4,7 +4,7 @@ import Loading from "./components/Loading"
 import NFTIcon from "./components/NFTIcon"
 import Media from "./components/Media"
 import styles from "./styles.css"
-import { toTrimmedAddress, isAddress, cx } from "./utils"
+import { toTrimmedAddress, isAddress, tsFormat, cx } from "./utils"
 import useStyleSheet from "./hooks/useStyleSheet"
 
 declare const API_HOST: string
@@ -12,17 +12,21 @@ export const css = styles
 
 function NFT({
   data: {
-    creatorOf,
-    creatorOfUrl,
+    contract,
+    tokenId,
+    metadata,
+    name,
+    description,
     ownerOf,
     ownerOfUrl,
-    metadata,
+    creatorOf,
+    creatorOfUrl,
+    platform,
+    platformUrl,
+    mediaUrl,
+    mediaPageUrl,
     blockNumber,
     timestamp,
-    mintedBy,
-    mintedByUrl,
-    media,
-    mediaPageUrl,
   },
   className,
   style,
@@ -47,20 +51,23 @@ function NFT({
         </div>
 
         <div>
-          <a href="https://nfte.app/whats-an-nft" target="_blank">
+          <a
+            href="https://foundation.app/blog/nfts-are-transforming-the-digital-art-world"
+            target="_blank"
+          >
             <NFTIcon />
           </a>
         </div>
       </section>
 
-      {media && (
+      {mediaUrl && (
         <section className="nfte__media">
-          <Media media={media} />
+          <Media media={mediaUrl} />
         </section>
       )}
 
-      <p className="pr1 pl1 nfte__name">{metadata?.name}</p>
-      <p className="pr1 pl1 pb1 nfte__description">{metadata?.description}</p>
+      <p className="pr1 pl1 nfte__name">{name}</p>
+      <p className="pr1 pl1 pb1 nfte__description">{description}</p>
 
       <section className="nfte__meta">
         <div className="pl1 pr1 nfte__single-meta">
@@ -72,8 +79,8 @@ function NFT({
 
         <div className="pl1 pr1 nfte__single-meta">
           <p className="nfte__label">Minted by</p>
-          <a target="_blank" href={mintedByUrl} className="nfte__meta-content">
-            {isAddress(mintedBy) ? toTrimmedAddress(mintedBy) : mintedBy}
+          <a target="_blank" href={platformUrl} className="nfte__meta-content">
+            {isAddress(platform) ? toTrimmedAddress(platform) : platform}
           </a>
         </div>
 
@@ -83,7 +90,7 @@ function NFT({
             title={`Block number: ${blockNumber}`}
             className="nfte__meta-content"
           >
-            {timestamp}
+            {tsFormat(timestamp)}
           </p>
         </div>
       </section>
@@ -127,6 +134,7 @@ export function NFTE({
 
       if (r.ok) {
         const data = await r.json()
+        // console.log(data)
         setData(data)
       }
     }
