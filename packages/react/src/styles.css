@@ -120,7 +120,8 @@
   display: flex;
   background-color: #000;
   margin-bottom: var(--nfte-space-1);
-  height: 480px;
+  aspect-ratio: 1/1;
+  min-height: 240px;
 }
 
 .nfte--loaded .nfte__media-content {

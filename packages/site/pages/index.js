@@ -69,7 +69,7 @@ export default function Home() {
           </Box>
           <Box css={{ width: "100%", fontWeight: 700 }}>Free</Box>
           <Box css={{ width: "100%", fontWeight: 700 }}>
-            Tiny size (&lt;3.5KB)
+            Tiny size (&lt;4KB)
           </Box>
           <Box css={{ width: "100%", fontWeight: 700 }}>Dark mode</Box>
         </Box>

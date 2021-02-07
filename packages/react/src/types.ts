@@ -3,17 +3,23 @@ import { CSSProperties } from "react"
 export type NFTData = {
   contract: string
   tokenId: string
-  creatorOf: string
-  creatorOfUrl: string
+  metadata: { [key: string]: any }
+  name: string
+  description: string
   ownerOf: string
   ownerOfUrl: string
-  mintedBy: string
-  mintedByUrl: string
-  metadata: { image: string; name: string; description?: string }
+  creatorOf: string
+  creatorOfUrl: string
+  platform: string
+  platformUrl: string
+  mediaUrl: string
+  mediaPageUrl: string
   blockNumber: string
   timestamp: string
+  // Deprecated
   media: string
-  mediaPageUrl: string
+  mintedBy: string
+  mintedByUrl: string
 }
 
 export type NFTEProps = {
