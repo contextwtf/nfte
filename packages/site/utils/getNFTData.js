@@ -1,11 +1,10 @@
 import { ethers, BigNumber, utils } from "ethers"
-import { fromUnixTime, format } from "date-fns"
-import { zonedTimeToUtc } from "date-fns-tz"
 import has from "lodash/has"
 import knownContracts from "knownContracts"
 import erc721ABI from "abis/erc721"
 import isIPFS from "@utils/isIPFS"
 import makeIPFSUrl from "@utils/makeIPFSUrl"
+import getMimeType from "@utils/getMimeType"
 
 const provider = new ethers.providers.CloudflareProvider()
 const historicalProvider = new ethers.providers.InfuraProvider(
@@ -55,6 +54,8 @@ async function defaultGetContractData({
     ? makeIPFSUrl(metadata?.image)
     : metadata?.image
 
+  const mediaMimeType = await getMimeType(mediaUrl)
+
   return {
     metadata,
     name: metadata?.name,
@@ -65,6 +66,7 @@ async function defaultGetContractData({
     creatorOfUrl: null,
     mediaUrl,
     mediaPageUrl: null,
+    mediaMimeType: mediaMimeType,
     platform: null,
     platformUrl: null,
     blockNumber,
@@ -108,6 +110,7 @@ export default async function ({ contract, tokenId }) {
       creatorOfUrl,
       mediaUrl,
       mediaPageUrl,
+      mediaMimeType,
       platform,
       platformUrl,
       blockNumber,
@@ -148,6 +151,7 @@ export default async function ({ contract, tokenId }) {
       platformUrl: resolvedPlatformUrl,
       mediaUrl,
       mediaPageUrl: resolvedMediaPageUrl,
+      mediaMimeType,
       blockNumber,
       timestamp,
       // deprecated

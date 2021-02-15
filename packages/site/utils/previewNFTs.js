@@ -5,6 +5,8 @@ export default [
   { contract: "0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0", tokenId: "18552" },
   // Jeff Kraus (Foundation)
   { contract: "0x3b3ee1931dc30c1957379fac9aba94d1c48a5405", tokenId: "15" },
+  // Sam Mason de Caires (Foundation)
+  { contract: "0x3b3ee1931dc30c1957379fac9aba94d1c48a5405", tokenId: "214" },
   // EthBlock.art
   { contract: "0xb80fbf6cdb49c33dc6ae4ca11af8ac47b0b4c0f3", tokenId: "149" },
   // Zora

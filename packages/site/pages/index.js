@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useDebounce } from "use-debounce"
+import { useRouter } from "next/router"
 import Link from "next/link"
 import Head from "next/head"
 import sample from "lodash/sample"
@@ -12,11 +13,22 @@ import { NFTE } from "@nfte/react"
 import previewNFTs from "utils/previewNFTs"
 
 export default function Home() {
-  const [randomNFT, setRandomNFT] = useState(sample(previewNFTs))
+  const router = useRouter()
   const [contract, setContract] = useState("")
   const [tokenId, setTokenId] = useState("")
   const [debouncedContract] = useDebounce(contract, 1000)
   const [debouncedTokenId] = useDebounce(tokenId, 1000)
+
+  useEffect(() => {
+    if (router.isReady && router.query?.contract && router.query?.tokenId) {
+      setContract(router.query?.contract)
+      setTokenId(router.query?.tokenId)
+    } else {
+      const rNFT = sample(previewNFTs)
+      setContract(rNFT.contract)
+      setTokenId(rNFT.tokenId)
+    }
+  }, [router])
 
   return (
     <>
@@ -126,7 +138,6 @@ export default function Home() {
         <Box
           css={{
             display: "flex",
-
             justifyContent: "center",
             flexWrap: "wrap",
           }}
@@ -153,6 +164,7 @@ export default function Home() {
                 px: "@1",
                 py: "@0",
               }}
+              name="contract"
               placeholder="0x...."
               value={contract}
               onChange={(e) => setContract(e.target.value)}
@@ -181,6 +193,7 @@ export default function Home() {
                 px: "@1",
                 py: "@0",
               }}
+              name="tokenId"
               placeholder="1"
               value={tokenId}
               onChange={(e) => setTokenId(e.target.value)}
@@ -205,7 +218,12 @@ export default function Home() {
               mb: "@3",
               cursor: "pointer",
             }}
-            onClick={() => setRandomNFT(sample(previewNFTs))}
+            onClick={() => {
+              const rNFT = sample(previewNFTs)
+              console.log(rNFT)
+              setContract(rNFT.contract)
+              setTokenId(rNFT.tokenId)
+            }}
           >
             Get random NFT
           </Box>
@@ -213,16 +231,8 @@ export default function Home() {
 
         <Box css={{ mb: "@4" }}>
           <NFTE
-            contract={
-              debouncedContract.length === 0
-                ? randomNFT.contract
-                : debouncedContract
-            }
-            tokenId={
-              debouncedTokenId.length === 0
-                ? randomNFT.tokenId
-                : debouncedTokenId
-            }
+            contract={debouncedContract}
+            tokenId={debouncedTokenId}
             style={{ marginLeft: "auto", marginRight: "auto" }}
           />
         </Box>
