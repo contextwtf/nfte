@@ -40,6 +40,7 @@ export default {
       creatorOfUrl: `https://zora.co/${creatorOf}`,
       mediaUrl: tokenURI.value,
       mediaPageUrl: `https://zora.co/${creatorOf}/${tokenId}`,
+      mediaMimeType: metadata.mimeType,
       platform: "Zora",
       platformUrl: "https://zora.co",
       blockNumber,

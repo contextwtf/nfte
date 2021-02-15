@@ -1,5 +1,6 @@
 import kebabCase from "lodash/kebabCase"
 import { BigNumber } from "ethers"
+import getMimeType from "@utils/getMimeType"
 
 export default {
   addresses: ["0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0"],
@@ -31,6 +32,8 @@ export default {
     const metadataRes = await fetch(tokenURI.value)
     const metadata = await metadataRes.json()
 
+    const mediaMimeType = await getMimeType(metadata?.media?.uri)
+
     return {
       metadata,
       name: metadata?.name,
@@ -43,6 +46,7 @@ export default {
       mediaPageUrl: `https://superrare.co/artwork-v2/${kebabCase(
         metadata.name
       )}-${tokenId}`,
+      mediaMimeType,
       platform: "SuperRare",
       platformUrl: "https://superrare.co",
       blockNumber,
