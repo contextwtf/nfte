@@ -8,7 +8,7 @@ import Box from "@components/Box"
 import CodeBlock from "@components/CodeBlock"
 import InlineCode from "@components/InlineCode"
 import Footer from "@components/Footer"
-import { NFTE } from "@nfte/react"
+import { NFTE, Embed } from "@nfte/react"
 
 import previewNFTs from "utils/previewNFTs"
 
@@ -234,7 +234,9 @@ export default function Home() {
             contract={debouncedContract}
             tokenId={debouncedTokenId}
             style={{ marginLeft: "auto", marginRight: "auto" }}
-          />
+          >
+            {(props) => <Embed {...props} />}
+          </NFTE>
         </Box>
 
         <Box css={{ fontSize: "@3", fontWeight: 700, mb: "@2" }}>
