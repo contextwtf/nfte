@@ -1,4 +1,4 @@
-import React, { useState, useEffect, CSSProperties } from "react"
+import React, { useState, useEffect, CSSProperties, ReactNode } from "react"
 import { NFTData, NFTEProps } from "./types"
 import Loading from "./components/Loading"
 import NFTIcon from "./components/NFTIcon"
@@ -112,14 +112,37 @@ function NFT({
   )
 }
 
+export function Embed({
+  data,
+  style,
+  className,
+  darkMode,
+  autoPlay,
+}: NFTEProps) {
+  useStyleSheet(styles)
+
+  if (!data) return <Loading style={style} />
+
+  return (
+    <NFT
+      data={data}
+      className={className}
+      style={style}
+      darkMode={darkMode}
+      autoPlay={autoPlay}
+    />
+  )
+}
+
 export function NFTE({
-  contract = "0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0",
-  tokenId = "17824",
+  contract,
+  tokenId,
   initialData,
   className,
   style,
   darkMode,
   autoPlay = true,
+  children,
 }: {
   contract: string
   tokenId: string
@@ -128,9 +151,14 @@ export function NFTE({
   style?: CSSProperties
   darkMode?: boolean
   autoPlay: boolean
+  children: (props: {
+    data: NFTData | undefined
+    className?: string
+    style?: CSSProperties
+    darkMode?: boolean
+    autoPlay: boolean
+  }) => ReactNode
 }) {
-  useStyleSheet(styles)
-
   const [data, setData] = useState<NFTData | undefined>(initialData)
   useEffect(() => {
     if (initialData) return
@@ -150,15 +178,5 @@ export function NFTE({
     fetchNftData()
   }, [contract, tokenId])
 
-  if (!data) return <Loading style={style} />
-
-  return (
-    <NFT
-      data={data}
-      className={className}
-      style={style}
-      darkMode={darkMode}
-      autoPlay={autoPlay}
-    />
-  )
+  return children({ data, className, style, darkMode, autoPlay })
 }
