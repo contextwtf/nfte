@@ -16,9 +16,16 @@ function Text({ media }: { media: string }) {
   )
 }
 
-function Video({ media }: { media: string }) {
+function Video({ media, autoPlay }: { media: string; autoPlay: boolean }) {
   return (
-    <video className="nfte__media-content" muted autoPlay loop playsInline>
+    <video
+      className="nfte__media-content"
+      muted
+      autoPlay={autoPlay}
+      controls={!autoPlay}
+      loop
+      playsInline
+    >
       <source src={media} />
     </video>
   )
@@ -28,20 +35,21 @@ function Audio({ media }: { media: string }) {
   return <audio className="nfte__media-content" controls src={media}></audio>
 }
 
-export default function Media({ media }: { media: string }) {
-  const [mimeType, setMimeType] = useState<string | null>(null)
+export default function Media({
+  media,
+  mediaMimeType,
+  autoPlay,
+}: {
+  media: string
+  mediaMimeType: string
+  autoPlay: boolean
+}) {
+  if (mediaMimeType?.includes("text")) return <Text media={media} />
 
-  useEffect(() => {
-    fetch(media, { method: "HEAD" }).then((r) =>
-      setMimeType(r.headers.get("Content-Type"))
-    )
-  }, [])
+  if (mediaMimeType?.includes("video"))
+    return <Video media={media} autoPlay={autoPlay} />
 
-  if (mimeType?.includes("text")) return <Text media={media} />
-
-  if (mimeType?.includes("video")) return <Video media={media} />
-
-  if (mimeType?.includes("audio")) return <Audio media={media} />
+  if (mediaMimeType?.includes("audio")) return <Audio media={media} />
 
   return <img className="nfte__media-content" src={media} />
 }

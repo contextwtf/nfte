@@ -1,6 +1,7 @@
 import { BigNumber } from "ethers"
 import isIPFS from "@utils/isIPFS"
 import makeIPFSUrl from "@utils/makeIPFSUrl"
+import getMimeType from "@utils/getMimeType"
 
 export default {
   addresses: ["0x60f80121c31a0d46b5279700f9df786054aa5ee5"],
@@ -34,6 +35,8 @@ export default {
       ? makeIPFSUrl(metadata?.image)
       : metadata?.image
 
+    const mediaMimeType = await getMimeType(mediaUrl)
+
     return {
       metadata,
       name: metadata?.name,
@@ -44,6 +47,7 @@ export default {
       creatorOfUrl: `https://app.rarible.com/user/${creatorOf}`,
       mediaUrl: mediaUrl,
       mediaPageUrl: `https://app.rarible.com/token/${contractAddress}:${tokenId}`,
+      mediaMimeType,
       platform: "Rarible",
       platformUrl: "https://rarible.com",
       blockNumber,

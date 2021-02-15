@@ -14,6 +14,7 @@ export type NFTData = {
   platformUrl: string
   mediaUrl: string
   mediaPageUrl: string
+  mediaMimeType?: string
   blockNumber: string
   timestamp: string
   // Deprecated
@@ -27,4 +28,5 @@ export type NFTEProps = {
   className?: string
   style?: CSSProperties
   darkMode?: boolean
+  autoPlay: boolean
 }

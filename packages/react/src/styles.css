@@ -97,7 +97,7 @@
 .nfte--loaded .nfte__label {
   color: var(--nfte-colors-text-light);
   text-decoration: none;
-  margin-bottom: var(--nfte-space1);
+  margin-bottom: 4px;
 }
 
 .nfte--loaded .nfte__creator-id {
@@ -121,7 +121,7 @@
   background-color: #000;
   margin-bottom: var(--nfte-space-1);
   aspect-ratio: 1/1;
-  height: 480px;
+  max-height: 480px;
 }
 
 .nfte--loaded .nfte__media-content {

@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers"
+import getMimeType from "@utils/getMimeType"
 
 export default {
   addresses: ["0xb80fBF6cdb49c33dC6aE4cA11aF8Ac47b0b4C0f3"],
@@ -25,6 +26,8 @@ export default {
     const metadataRes = await fetch(tokenURI.value)
     const metadata = await metadataRes.json()
 
+    const mediaMimeType = await getMimeType(metadata?.image)
+
     return {
       metadata,
       name: metadata?.name,
@@ -35,6 +38,7 @@ export default {
       creatorOfUrl: null,
       mediaUrl: metadata?.image,
       mediaPageUrl: `https://ethblock.art/view/${tokenId}`,
+      mediaMimeType,
       platform: "EthBlock.art",
       platformUrl: "https://ethblock.art",
       blockNumber,
