@@ -135,6 +135,10 @@ export default function Docs() {
             <InlineCode>?darkMode=0</InlineCode> - Enables dark mode for the
             embed
           </Box>
+          <Box as="p">
+            <InlineCode>?disableAutoPlay=0</InlineCode> - Disables autoplaying
+            of video files
+          </Box>
         </Box>
 
         <Box css={{ mb: "@4" }}>
@@ -160,6 +164,11 @@ export default function Docs() {
           <Box as="p">
             <InlineCode>style</InlineCode> <strong>Object</strong> - Inline
             styles that are applied to the top level wrapper element
+          </Box>
+          <Box as="p">
+            <InlineCode>autoPlay</InlineCode> <strong>Boolean</strong> - If set
+            to false will disable autoplaying of videos. Default:{" "}
+            <InlineCode>true</InlineCode>
           </Box>
         </Box>
 
@@ -438,9 +447,6 @@ export default function Docs() {
           <strong>Currently supported</strong>
           <Box as="ul" css={{ pl: "@3", mb: "@4", mt: "@1" }}>
             <Box as="li" css={{ mb: "@1" }}>
-              Async Art
-            </Box>
-            <Box as="li" css={{ mb: "@1" }}>
               EthBlock.art
             </Box>
             <Box as="li" css={{ mb: "@1" }}>
@@ -571,6 +577,12 @@ export default function Docs() {
         <Box as="p" css={{ m: 0, mb: "@3" }}>
           <InlineCode>mediaPageUrl</InlineCode> - The url of the media files
           page on the platform
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3" }}>
+          <InlineCode>mediaMimeType</InlineCode> - The mime type of the media
+          file e.g. <InlineCode>video/mp4</InlineCode>,{" "}
+          <InlineCode>image/png</InlineCode>
         </Box>
 
         <Box as="p" css={{ m: 0, mb: "@3" }}>

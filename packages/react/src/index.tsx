@@ -25,12 +25,14 @@ function NFT({
     platformUrl,
     mediaUrl,
     mediaPageUrl,
+    mediaMimeType,
     blockNumber,
     timestamp,
   },
   className,
   style,
   darkMode,
+  autoPlay,
 }: NFTEProps) {
   return (
     <div
@@ -60,9 +62,13 @@ function NFT({
         </div>
       </section>
 
-      {mediaUrl && (
+      {mediaUrl && mediaMimeType && (
         <section className="nfte__media">
-          <Media media={mediaUrl} />
+          <Media
+            media={mediaUrl}
+            mediaMimeType={mediaMimeType}
+            autoPlay={autoPlay}
+          />
         </section>
       )}
 
@@ -113,6 +119,7 @@ export function NFTE({
   className,
   style,
   darkMode,
+  autoPlay = true,
 }: {
   contract: string
   tokenId: string
@@ -120,6 +127,7 @@ export function NFTE({
   className?: string
   style?: CSSProperties
   darkMode?: boolean
+  autoPlay: boolean
 }) {
   useStyleSheet(styles)
 
@@ -145,6 +153,12 @@ export function NFTE({
   if (!data) return <Loading style={style} />
 
   return (
-    <NFT data={data} className={className} style={style} darkMode={darkMode} />
+    <NFT
+      data={data}
+      className={className}
+      style={style}
+      darkMode={darkMode}
+      autoPlay={autoPlay}
+    />
   )
 }

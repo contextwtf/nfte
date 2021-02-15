@@ -1,6 +1,7 @@
 import { BigNumber } from "ethers"
-import isIPFS from "utils/isIPFS"
-import makeIPFSUrl from "utils/makeIPFSUrl"
+import isIPFS from "@utils/isIPFS"
+import makeIPFSUrl from "@utils/makeIPFSUrl"
+import getMimeType from "@utils/getMimeType"
 
 export default {
   addresses: ["0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405"],
@@ -32,6 +33,8 @@ export default {
       ? makeIPFSUrl(metadata?.image)
       : metadata?.image
 
+    const mediaMimeType = await getMimeType(mediaUrl)
+
     return {
       metadata,
       name: metadata?.name,
@@ -42,6 +45,7 @@ export default {
       creatorOfUrl: null,
       mediaUrl,
       mediaPageUrl: null,
+      mediaMimeType,
       platform: "Foundation",
       platformUrl: "https://foundation.app",
       blockNumber,
