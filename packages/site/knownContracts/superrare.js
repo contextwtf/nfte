@@ -41,7 +41,9 @@ export default {
       ownerOf: ownerOfAddress.value,
       ownerOfUrl: null,
       creatorOf: metadata?.createdBy,
-      creatorOfUrl: null,
+      creatorOfUrl: `https://superrare.co/artwork-v2/${kebabCase(
+        metadata.name
+      )}-${tokenId}`,
       mediaUrl: metadata?.media?.uri,
       mediaPageUrl: `https://superrare.co/artwork-v2/${kebabCase(
         metadata.name
