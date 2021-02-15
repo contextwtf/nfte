@@ -447,9 +447,6 @@ export default function Docs() {
           <strong>Currently supported</strong>
           <Box as="ul" css={{ pl: "@3", mb: "@4", mt: "@1" }}>
             <Box as="li" css={{ mb: "@1" }}>
-              Async Art
-            </Box>
-            <Box as="li" css={{ mb: "@1" }}>
               EthBlock.art
             </Box>
             <Box as="li" css={{ mb: "@1" }}>
