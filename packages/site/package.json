@@ -10,6 +10,7 @@
     "dev": "next dev"
   },
   "dependencies": {
+    "@nfte/handler": "^0.2.0",
     "@nfte/react": "^0.2.0",
     "@stitches/react": "^0.0.2",
     "date-fns": "^2.17.0",

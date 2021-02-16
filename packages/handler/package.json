@@ -1,0 +1,38 @@
+{
+  "name": "@nfte/handler",
+  "version": "0.2.0",
+  "description": "A function to allow you to self host the api portion of NFTE in your own infrastructure.",
+  "source": "src/index.js",
+  "main": "dist/handler.js",
+  "module": "dist/handler.esm.js",
+  "license": "MIT",
+  "author": "Sam Mason de Caires <sam.jbmason@gmail.com>",
+  "repository": "sammdec/nfte",
+  "scripts": {
+    "build": "microbundle -f es,cjs",
+    "dev": "microbundle watch -f es,cjs",
+    "prepare": "yarn build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "microbundle": "^0.13.0"
+  },
+  "peerDependencies": {
+    "ethers": "^5.0.31",
+    "is-ipfs": "^2.0.0",
+    "lodash": "^4.17.20"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "typescript",
+    "nft",
+    "ethereum",
+    "dapp",
+    "ipfs",
+    "erc-721"
+  ]
+}

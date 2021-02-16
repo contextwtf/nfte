@@ -95,7 +95,7 @@ export default function Docs() {
             code={`<div className="nft-embed"></div>
 <script
   async
-  src="https://nftmark.net/api/embed.js?
+  src="https://nfte.app/api/embed.js?
   contract={contract address}&tokenId={token ID}">
 </script>`}
           />
@@ -107,7 +107,7 @@ export default function Docs() {
             Install with <InlineCode>npm i @nftmark/react</InlineCode> or{" "}
             <InlineCode>yarn add @nftmark/react</InlineCode>
           </Box>
-          <CodeBlock code={`<NFTEmbed contract="0x..." tokenId="1"/>`} />
+          <CodeBlock code={`<NFTE contract="0x..." tokenId="1"/>`} />
         </Box>
 
         <Box css={{ borderTop: "1px solid @border", my: "@5" }} />

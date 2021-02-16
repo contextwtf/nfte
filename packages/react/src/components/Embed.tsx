@@ -1,14 +1,14 @@
-import React, { useState, useEffect, CSSProperties, ReactNode } from "react"
-import { NFTData, NFTEProps } from "./types"
-import Loading from "./components/Loading"
-import NFTIcon from "./components/NFTIcon"
-import Media from "./components/Media"
-import styles from "./styles.css"
-import { toTrimmedAddress, isAddress, tsFormat, cx } from "./utils"
-import useStyleSheet from "./hooks/useStyleSheet"
+import React from "react"
 
-declare const API_HOST: string
-export const css = styles
+import NFTIcon from "../components/NFTIcon"
+import Media from "../components/Media"
+import Loading from "../components/Loading"
+import useStyleSheet from "../hooks/useStyleSheet"
+import { toTrimmedAddress, isAddress, tsFormat, cx } from "../utils"
+
+import { NFTEProps } from "../types"
+
+import styles from "../styles.css"
 
 function NFT({
   data: {
@@ -112,7 +112,7 @@ function NFT({
   )
 }
 
-export function Embed({
+export default function Embed({
   data,
   style,
   className,
@@ -132,51 +132,4 @@ export function Embed({
       autoPlay={autoPlay}
     />
   )
-}
-
-export function NFTE({
-  contract,
-  tokenId,
-  initialData,
-  className,
-  style,
-  darkMode,
-  autoPlay = true,
-  children,
-}: {
-  contract: string
-  tokenId: string
-  initialData?: NFTData
-  className?: string
-  style?: CSSProperties
-  darkMode?: boolean
-  autoPlay: boolean
-  children: (props: {
-    data: NFTData | undefined
-    className?: string
-    style?: CSSProperties
-    darkMode?: boolean
-    autoPlay: boolean
-  }) => ReactNode
-}) {
-  const [data, setData] = useState<NFTData | undefined>(initialData)
-  useEffect(() => {
-    if (initialData) return
-    async function fetchNftData() {
-      setData(undefined)
-      const r = await fetch(
-        `${API_HOST}/api/nft-data?contract=${contract}&tokenId=${tokenId}`
-      )
-
-      if (r.ok) {
-        const data = await r.json()
-        // console.log(data)
-        setData(data)
-      }
-    }
-
-    fetchNftData()
-  }, [contract, tokenId])
-
-  return children({ data, className, style, darkMode, autoPlay })
 }

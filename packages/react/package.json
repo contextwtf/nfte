@@ -2,7 +2,7 @@
   "name": "@nfte/react",
   "version": "0.2.0",
   "description": "A React component for rendering NFT's in your app",
-  "source": "src/index.tsx",
+  "source": "src/index.ts",
   "main": "dist/react.js",
   "module": "dist/react.esm.js",
   "types": "dist/index.d.ts",
@@ -38,5 +38,8 @@
     "ipfs",
     "erc-721"
   ],
-  "gitHead": "1838bb304d2105780a7572c594813a72c2b995d9"
+  "gitHead": "1838bb304d2105780a7572c594813a72c2b995d9",
+  "dependencies": {
+    "@nfte/handler": "^0.2.0"
+  }
 }
