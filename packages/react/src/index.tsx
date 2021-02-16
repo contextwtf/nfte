@@ -1,5 +1,5 @@
 import React, { useState, useEffect, CSSProperties, ReactNode } from "react"
-import { NFTData, NFTEProps } from "./types"
+import { NFTData, NFTEProps, NFTProps } from "./types"
 import Loading from "./components/Loading"
 import NFTIcon from "./components/NFTIcon"
 import Media from "./components/Media"
@@ -32,8 +32,8 @@ function NFT({
   className,
   style,
   darkMode,
-  autoPlay,
-}: NFTEProps) {
+  autoPlay = true,
+}: NFTProps) {
   return (
     <div
       className={cx([
@@ -150,16 +150,17 @@ export function NFTE({
   className?: string
   style?: CSSProperties
   darkMode?: boolean
-  autoPlay: boolean
-  children: (props: {
+  autoPlay?: boolean
+  children?: (props: {
     data: NFTData | undefined
     className?: string
     style?: CSSProperties
     darkMode?: boolean
-    autoPlay: boolean
-  }) => ReactNode
+    autoPlay?: boolean
+  }) => JSX.Element
 }) {
   const [data, setData] = useState<NFTData | undefined>(initialData)
+  const element = children || Embed
   useEffect(() => {
     if (initialData) return
     async function fetchNftData() {
@@ -178,5 +179,5 @@ export function NFTE({
     fetchNftData()
   }, [contract, tokenId])
 
-  return children({ data, className, style, darkMode, autoPlay })
+  return element({ data, className, style, darkMode, autoPlay })
 }

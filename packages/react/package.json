@@ -14,7 +14,7 @@
   "repository": "sammdec/nfte",
   "scripts": {
     "build": "microbundle -f es,cjs --jsx React.createElement --define API_HOST='https://nfte.app' --css inline",
-    "dev": "microbundle watch -f es,cjs --jsx React.createElement --define API_HOST='http://localhost:3000' --css inline",
+    "dev": "microbundle watch -f es,cjs --jsx React.createElement --define API_HOST='https://nfte.app' --css inline",
     "prepare": "yarn build"
   },
   "publishConfig": {

@@ -23,10 +23,18 @@ export type NFTData = {
   mintedByUrl: string
 }
 
-export type NFTEProps = {
+export type NFTProps = {
   data: NFTData
   className?: string
   style?: CSSProperties
   darkMode?: boolean
-  autoPlay: boolean
+  autoPlay?: boolean
+}
+
+export type NFTEProps = {
+  data: NFTData | undefined
+  className?: string
+  style?: CSSProperties
+  darkMode?: boolean
+  autoPlay?: boolean
 }

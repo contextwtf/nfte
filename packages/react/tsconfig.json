@@ -5,7 +5,11 @@
     "target": "ESNext",
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "declaration": true,
     "jsx": "react",
-    "baseUrl": "."
-  }
+    "baseUrl": ".",
+  },
+  "include": [
+    "src"
+  ]
 }
