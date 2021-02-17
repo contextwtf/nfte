@@ -8,7 +8,7 @@ import Box from "@components/Box"
 import CodeBlock from "@components/CodeBlock"
 import InlineCode from "@components/InlineCode"
 import Footer from "@components/Footer"
-import { NFTE } from "@nfte/react"
+import { NFTE, Embed } from "@nfte/react"
 
 import previewNFTs from "utils/previewNFTs"
 
@@ -220,7 +220,6 @@ export default function Home() {
             }}
             onClick={() => {
               const rNFT = sample(previewNFTs)
-              console.log(rNFT)
               setContract(rNFT.contract)
               setTokenId(rNFT.tokenId)
             }}

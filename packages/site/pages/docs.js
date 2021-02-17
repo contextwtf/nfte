@@ -73,6 +73,20 @@ export default function Docs() {
                 </Box>
               </Link>
             </Box>
+            <Box as="li" css={{ mb: "@0" }}>
+              <Link href="/docs#render-props" passHref>
+                <Box as="a" css={{ color: "currentcolor" }}>
+                  Render Props
+                </Box>
+              </Link>
+            </Box>
+            <Box as="li" css={{ mb: "@0" }}>
+              <Link href="/docs#self-host" passHref>
+                <Box as="a" css={{ color: "currentcolor" }}>
+                  Self-host endpoint
+                </Box>
+              </Link>
+            </Box>
           </Box>
         </Box>
 
@@ -95,7 +109,7 @@ export default function Docs() {
             code={`<div className="nft-embed"></div>
 <script
   async
-  src="https://nftmark.net/api/embed.js?
+  src="https://nfte.app/api/embed.js?
   contract={contract address}&tokenId={token ID}">
 </script>`}
           />
@@ -107,7 +121,7 @@ export default function Docs() {
             Install with <InlineCode>npm i @nftmark/react</InlineCode> or{" "}
             <InlineCode>yarn add @nftmark/react</InlineCode>
           </Box>
-          <CodeBlock code={`<NFTEmbed contract="0x..." tokenId="1"/>`} />
+          <CodeBlock code={`<NFTE contract="0x..." tokenId="1"/>`} />
         </Box>
 
         <Box css={{ borderTop: "1px solid @border", my: "@5" }} />
@@ -127,17 +141,31 @@ export default function Docs() {
             <InlineCode>?contract=[contract address]</InlineCode> - (Required)
             The NFTs Ethereum contract address
           </Box>
+
           <Box as="p">
             <InlineCode>?tokenId=[token ID]</InlineCode> - (Required) The NFTs
             token ID
           </Box>
-          <Box as="p">
+
+          <Box as="p" css={{ mb: "@1" }}>
             <InlineCode>?darkMode=0</InlineCode> - Enables dark mode for the
             embed
           </Box>
-          <Box as="p">
+          <Box as="p" css={{ mb: "@4", mt: 0 }}>
+            Example:
+            <InlineCode>
+              https://nfte.app/api/embed.js?contract=0x...&tokenId=1&darkMode=0
+            </InlineCode>
+          </Box>
+          <Box as="p" css={{ mb: "@1" }}>
             <InlineCode>?disableAutoPlay=0</InlineCode> - Disables autoplaying
             of video files
+          </Box>
+          <Box as="p" css={{ mb: "@4", mt: 0 }}>
+            Example:
+            <InlineCode>
+              https://nfte.app/api/embed.js?contract=0x...&tokenId=1&disableAutoPlay=0
+            </InlineCode>
           </Box>
         </Box>
 
@@ -610,6 +638,215 @@ export default function Docs() {
               packages/site/utils/getNFTData.js
             </Box>
           </InlineCode>
+        </Box>
+
+        <Box css={{ borderTop: "1px solid @border", my: "@5" }} />
+
+        <Box
+          id="render-props"
+          css={{ fontSize: "@3", fontWeight: 700, mb: "@2", mt: 0 }}
+        >
+          Render Props
+        </Box>
+        <Box as="p" css={{ m: 0, mb: "@1" }}>
+          If you would like more customisation of the embed's UI you can use
+          render props exposed by <InlineCode>{`<NFTE />`}</InlineCode>.
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@1" }}>
+          Below is a basic example of how you would create your own embed UI.
+          The render prop passes down an object containing{" "}
+          <InlineCode>
+            {`{data, className, style, darkMode, autoPlay}`}
+          </InlineCode>
+          .
+        </Box>
+
+        <CodeBlock
+          code={`<NFTE contract="0x..." tokenId="1">
+  {({ data, className, style, darkMode, autoPlay }) => <div>Some customised UI</div>}
+</NFTE>`}
+        />
+
+        <Box as="p" css={{ mt: "@2", mb: "@2" }}>
+          <strong>data</strong> - is an object containing properties fetched
+          from the endpoint
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>tokenId</InlineCode> - The token ID that represents the
+          current NFT
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>contract</InlineCode> - The ethereum address for the NFT
+          contract
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>metadata</InlineCode> - Object containing the metadata
+          fetched from tokenURI
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>name</InlineCode> - The name of the NFT
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>description</InlineCode> - The description of the NFT if
+          available
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>ownerOf</InlineCode> - A string representing the current
+          owner of the NFT, this could be an address, an ENS name or even a
+          platform specific username
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>ownerOfUrl</InlineCode> - A url pointing to the owners
+          profile or a url to the address found on etherscan
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>creatorOf</InlineCode> - A string representing the creator
+          of the NFT, this could be an address, an ENS name or even a platform
+          specific username
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>creatorOfUrl</InlineCode> - A url pointing to the creators
+          profile or a url to the address found on etherscan
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>platform</InlineCode> - The name of the platform this NFT
+          was minted on if a known contract otherwise it will be the address of
+          the contract
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>platformUrl</InlineCode> - A url of the platforms home or
+          a url to the contract address found on etherscan
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>mediaUrl</InlineCode> - A url representing the canonical
+          media of the NFT
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>mediaPageUrl</InlineCode> - A url of the tokens unique
+          page on the platform or a link to the token on Etherscan
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>mediaMimeType</InlineCode> - A mimetype of the media found
+          at mediaUrl
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>blockNumber</InlineCode> - The block number that this NFT
+          was minted in
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>timestamp</InlineCode> - The unix timestamp when the
+          blockNumber was created
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>media</InlineCode> <strong>deprecated</strong> -
+          Equivalent of mediaUrl
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@2", pl: "@2" }}>
+          <InlineCode>mintedBy</InlineCode> <strong>deprecated</strong> -
+          Equivalent of platform
+        </Box>
+
+        <Box as="p" css={{ m: 0, mb: "@3", pl: "@2" }}>
+          <InlineCode>mintedByUrl</InlineCode> <strong>deprecated</strong> -
+          Equivalent of platformUrl
+        </Box>
+
+        <Box as="p" css={{ mt: "@2", mb: "@3" }}>
+          <strong>className</strong> - passed down from the NFTE component
+        </Box>
+
+        <Box as="p" css={{ mt: "@2", mb: "@3" }}>
+          <strong>style</strong> - a style object passed down from the NFTE
+          component if used
+        </Box>
+
+        <Box as="p" css={{ mt: "@2", mb: "@3" }}>
+          <strong>darkMode</strong> - a boolean representing if dark mode has
+          been set on the NFTE component, defaults to{" "}
+          <InlineCode>false</InlineCode>
+        </Box>
+
+        <Box as="p" css={{ mt: "@2", mb: "@3" }}>
+          <strong>autoPlay</strong> - a boolean representing if autoplay has
+          been set on the NFTE component, defaults to{" "}
+          <InlineCode>true</InlineCode>
+        </Box>
+
+        <Box css={{ borderTop: "1px solid @border", my: "@5" }} />
+
+        <Box
+          id="self-host"
+          css={{ fontSize: "@3", fontWeight: 700, mb: "@2", mt: 0 }}
+        >
+          Self-host endpoint
+        </Box>
+        <Box as="p">
+          nfte.app maintains a hosted endpoint that the react component and
+          script tage use by default, but there might be times when you want to
+          host your own endpoint on your own infrastructure using your own
+          provider keys and that's cool.
+        </Box>
+        <Box as="p">
+          You can use the <InlineCode>@nfte/handler</InlineCode> package to add
+          the main data logic to your app. You will need to provide a ethers.js{" "}
+          <InlineCode>provider</InlineCode>
+          instance that can access current blockchain data for this we recommend
+          using Cloudflares Ethereum gateway and also a{" "}
+          <InlineCode>historicalProvider</InlineCode> that can access the full
+          block history for this we recommend Infura.
+        </Box>
+
+        <Box as="p">
+          You can override the endpoint url used by the{" "}
+          <InlineCode>NFTE</InlineCode> component (
+          <InlineCode>@nfte/react</InlineCode>) to point to your endpoint. The
+          endpoint should be accessible by <InlineCode>GET</InlineCode> and the
+          contract and tokenId paramters are expected as query paramaters.
+        </Box>
+
+        <Box as="p">
+          The <InlineCode>data</InlineCode> object returned from the{" "}
+          <InlineCode>getData</InlineCode> function is what the React component
+          expects from its built in fetch.
+        </Box>
+
+        <CodeBlock
+          code={`import { NFTData } from "@nfte/handler"
+          
+const provider = new ethers.providers.CloudflareProvider()
+const historicalProvider = new ethers.providers.InfuraProvider(
+  null,
+  process.env.INFURA_PROJECT_ID
+)
+          
+const nftData = new NFTData({ provider, historicalProvider })
+const data = await nftData.getData({ contract: '0x...', tokenId: '1' })`}
+        />
+
+        <Box as="p">
+          You can of course build your own UI and fetch the data however you
+          would like or just skip the <InlineCode>NFTE</InlineCode> component
+          and use the <InlineCode>Embed</InlineCode> component and do the
+          fetching of data yourself.
         </Box>
 
         <Footer />

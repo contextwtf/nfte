@@ -1,7 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server"
-import getNFTData from "@utils/getNFTData"
+import { ethers } from "ethers"
+import { NFTData } from "@nfte/handler"
 import allowCORS from "@utils/allowCORS"
-import { NFTE, css } from "@nfte/react"
+import { css, Embed } from "@nfte/react"
 
 function embedScript(markup, css) {
   return /*javascript*/ `
@@ -20,8 +21,16 @@ function embedScript(markup, css) {
 `
 }
 
+const nftData = new NFTData({
+  provider: new ethers.providers.CloudflareProvider(),
+  historicalProvider: new ethers.providers.InfuraProvider(
+    null,
+    process.env.INFURA_PROJECT_ID
+  ),
+})
+
 export default allowCORS(async function handler(req, res) {
-  const { contract, tokenId, darkMode } = req.query
+  const { contract, tokenId, darkMode, disableAutoPlay } = req.query
 
   if (!contract || !tokenId) {
     return res
@@ -30,9 +39,10 @@ export default allowCORS(async function handler(req, res) {
   }
 
   try {
-    const data = await getNFTData({ contract, tokenId })
+    const data = await nftData.getData({ contract, tokenId })
+
     const html = renderToStaticMarkup(
-      <NFTE initialData={data} darkMode={darkMode} />
+      <Embed data={data} darkMode={darkMode} autoPlay={!disableAutoPlay} />
     )
 
     res.setHeader("Content-Type", "text/javascript; charset=utf-8")
@@ -43,6 +53,7 @@ export default allowCORS(async function handler(req, res) {
     )
     res.status(200).send(embedScript(html, css))
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: "Cannot retrieve nft data" })
   }
 })
