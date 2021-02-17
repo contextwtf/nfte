@@ -22,7 +22,8 @@
   "peerDependencies": {
     "ethers": "^5.0.31",
     "is-ipfs": "^2.0.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "node-fetch": "^2.6.1"
   },
   "files": [
     "dist"
@@ -35,7 +36,5 @@
     "ipfs",
     "erc-721"
   ],
-  "dependencies": {
-    "node-fetch": "^2.6.1"
-  }
+  "dependencies": {}
 }
