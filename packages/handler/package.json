@@ -1,7 +1,7 @@
 {
   "name": "@nfte/handler",
   "version": "0.2.0",
-  "description": "A function to allow you to self host the api portion of NFTE in your own infrastructure.",
+  "description": "A function to allow you to self-host the api portion of NFTE in your own infrastructure.",
   "source": "src/index.js",
   "main": "dist/handler.js",
   "module": "dist/handler.esm.js",
