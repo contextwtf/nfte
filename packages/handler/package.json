@@ -1,6 +1,6 @@
 {
   "name": "@nfte/handler",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A function to allow you to self-host the api portion of NFTE in your own infrastructure.",
   "source": "src/index.js",
   "main": "dist/handler.js",
@@ -35,6 +35,5 @@
     "dapp",
     "ipfs",
     "erc-721"
-  ],
-  "dependencies": {}
+  ]
 }
