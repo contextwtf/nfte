@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers"
+import fetch from "node-fetch"
 import isIPFS from "./isIPFS"
 import makeIPFSUrl from "./makeIPFSUrl"
 import getMimeType from "./getMimeType"

@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server"
 import { ethers } from "ethers"
 import { NFTData } from "@nfte/handler"
 import allowCORS from "@utils/allowCORS"
-import { NFTE, css, Embed } from "@nfte/react"
+import { css, Embed } from "@nfte/react"
 
 function embedScript(markup, css) {
   return /*javascript*/ `
@@ -30,7 +30,7 @@ const nftData = new NFTData({
 })
 
 export default allowCORS(async function handler(req, res) {
-  const { contract, tokenId, darkMode } = req.query
+  const { contract, tokenId, darkMode, disableAutoPlay } = req.query
 
   if (!contract || !tokenId) {
     return res
@@ -42,9 +42,7 @@ export default allowCORS(async function handler(req, res) {
     const data = await nftData.getData({ contract, tokenId })
 
     const html = renderToStaticMarkup(
-      <NFTE initialData={data} darkMode={darkMode}>
-        {(props) => <Embed {...props} />}
-      </NFTE>
+      <Embed data={data} darkMode={darkMode} autoPlay={!disableAutoPlay} />
     )
 
     res.setHeader("Content-Type", "text/javascript; charset=utf-8")

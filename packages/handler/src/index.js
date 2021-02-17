@@ -60,8 +60,6 @@ export class NFTData {
         blockNumber,
       } = contractData
 
-      console.log(metadata)
-
       // If there is a known contract and .mediaPageUrl is set otherwise use etherscan
       const resolvedMediaPageUrl =
         mediaPageUrl ?? `https://etherscan.io/address/${contract}?a=${tokenId}`

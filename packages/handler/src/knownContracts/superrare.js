@@ -1,4 +1,5 @@
 import kebabCase from "lodash/kebabCase"
+import fetch from "node-fetch"
 import { BigNumber } from "ethers"
 import getMimeType from "../utils/getMimeType"
 
@@ -33,8 +34,6 @@ export default {
     const metadata = await metadataRes.json()
 
     const mediaMimeType = await getMimeType(metadata?.media?.uri)
-
-    console.log(metadata)
 
     return {
       metadata,

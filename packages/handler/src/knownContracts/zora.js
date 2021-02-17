@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers"
+import fetch from "node-fetch"
 import abi from "../abis/zora"
 
 export default {

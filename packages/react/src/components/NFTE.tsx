@@ -1,7 +1,6 @@
-import React, { useState, useEffect, CSSProperties } from "react"
+import { useState, useEffect, CSSProperties } from "react"
 import { NFTData } from "../types"
-
-const Embed = React.lazy(() => import("./Embed"))
+import Embed from "./Embed"
 
 import styles from "../styles.css"
 

@@ -73,6 +73,20 @@ export default function Docs() {
                 </Box>
               </Link>
             </Box>
+            <Box as="li" css={{ mb: "@0" }}>
+              <Link href="/docs#render-props" passHref>
+                <Box as="a" css={{ color: "currentcolor" }}>
+                  Render Props
+                </Box>
+              </Link>
+            </Box>
+            <Box as="li" css={{ mb: "@0" }}>
+              <Link href="/docs#self-host" passHref>
+                <Box as="a" css={{ color: "currentcolor" }}>
+                  Self-host endpoint
+                </Box>
+              </Link>
+            </Box>
           </Box>
         </Box>
 
@@ -127,17 +141,31 @@ export default function Docs() {
             <InlineCode>?contract=[contract address]</InlineCode> - (Required)
             The NFTs Ethereum contract address
           </Box>
+
           <Box as="p">
             <InlineCode>?tokenId=[token ID]</InlineCode> - (Required) The NFTs
             token ID
           </Box>
-          <Box as="p">
+
+          <Box as="p" css={{ mb: "@1" }}>
             <InlineCode>?darkMode=0</InlineCode> - Enables dark mode for the
             embed
           </Box>
-          <Box as="p">
+          <Box as="p" css={{ mb: "@4", mt: 0 }}>
+            Example:
+            <InlineCode>
+              https://nfte.app/api/embed.js?contract=0x...&tokenId=1&darkMode=0
+            </InlineCode>
+          </Box>
+          <Box as="p" css={{ mb: "@1" }}>
             <InlineCode>?disableAutoPlay=0</InlineCode> - Disables autoplaying
             of video files
+          </Box>
+          <Box as="p" css={{ mb: "@4", mt: 0 }}>
+            Example:
+            <InlineCode>
+              https://nfte.app/api/embed.js?contract=0x...&tokenId=1&disableAutoPlay=0
+            </InlineCode>
           </Box>
         </Box>
 
@@ -610,6 +638,24 @@ export default function Docs() {
               packages/site/utils/getNFTData.js
             </Box>
           </InlineCode>
+        </Box>
+
+        <Box css={{ borderTop: "1px solid @border", my: "@5" }} />
+
+        <Box
+          id="render-props"
+          css={{ fontSize: "@3", fontWeight: 700, mb: "@2", mt: 0 }}
+        >
+          Render Props
+        </Box>
+
+        <Box css={{ borderTop: "1px solid @border", my: "@5" }} />
+
+        <Box
+          id="self-host"
+          css={{ fontSize: "@3", fontWeight: 700, mb: "@2", mt: 0 }}
+        >
+          Self-host endpoint
         </Box>
 
         <Footer />

@@ -34,5 +34,8 @@
     "dapp",
     "ipfs",
     "erc-721"
-  ]
+  ],
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
 }

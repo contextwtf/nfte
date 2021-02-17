@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers"
+import fetch from "node-fetch"
 import getMimeType from "../utils/getMimeType"
 
 export default {

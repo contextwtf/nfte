@@ -220,7 +220,6 @@ export default function Home() {
             }}
             onClick={() => {
               const rNFT = sample(previewNFTs)
-              console.log(rNFT)
               setContract(rNFT.contract)
               setTokenId(rNFT.tokenId)
             }}
