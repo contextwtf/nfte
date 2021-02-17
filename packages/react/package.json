@@ -39,7 +39,5 @@
     "erc-721"
   ],
   "gitHead": "1838bb304d2105780a7572c594813a72c2b995d9",
-  "dependencies": {
-    "@nfte/handler": "^0.2.0"
-  }
+  "dependencies": {}
 }
