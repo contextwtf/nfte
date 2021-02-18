@@ -45,7 +45,7 @@ export default {
       creatorOf: creatorOf,
       creatorOfUrl: null,
       mediaUrl,
-      mediaPageUrl: null,
+      mediaPageUrl: `https://foundation.app/nft/nft-${tokenId}`,
       mediaMimeType,
       platform: "Foundation",
       platformUrl: "https://foundation.app",
