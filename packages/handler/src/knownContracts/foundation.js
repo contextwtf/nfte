@@ -30,8 +30,10 @@ export default {
     const metadataRes = await fetch(tokenURI.value)
     const metadata = await metadataRes.json()
 
+    console.log(metadata)
+
     const mediaUrl = isIPFS(metadata?.image)
-      ? makeIPFSUrl(metadata?.image)
+      ? makeIPFSUrl(metadata?.image, "https://ipfs.foundation.app/ipfs/")
       : metadata?.image
 
     const mediaMimeType = await getMimeType(mediaUrl)
