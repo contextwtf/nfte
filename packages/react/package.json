@@ -1,8 +1,8 @@
 {
   "name": "@nfte/react",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A React component for rendering NFT's in your app",
-  "source": "src/index.tsx",
+  "source": "src/index.ts",
   "main": "dist/react.js",
   "module": "dist/react.esm.js",
   "types": "dist/index.d.ts",

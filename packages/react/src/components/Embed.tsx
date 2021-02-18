@@ -1,14 +1,14 @@
-import React, { useState, useEffect, CSSProperties } from "react"
-import { NFTData, NFTEProps } from "./types"
-import Loading from "./components/Loading"
-import NFTIcon from "./components/NFTIcon"
-import Media from "./components/Media"
-import styles from "./styles.css"
-import { toTrimmedAddress, isAddress, tsFormat, cx } from "./utils"
-import useStyleSheet from "./hooks/useStyleSheet"
+import React from "react"
 
-declare const API_HOST: string
-export const css = styles
+import NFTIcon from "../components/NFTIcon"
+import Media from "../components/Media"
+import Loading from "../components/Loading"
+import useStyleSheet from "../hooks/useStyleSheet"
+import { toTrimmedAddress, isAddress, tsFormat, cx } from "../utils"
+
+import { NFTEProps } from "../types"
+
+import styles from "../styles.css"
 
 function NFT({
   data: {
@@ -112,43 +112,14 @@ function NFT({
   )
 }
 
-export function NFTE({
-  contract = "0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0",
-  tokenId = "17824",
-  initialData,
-  className,
+export default function Embed({
+  data,
   style,
+  className,
   darkMode,
-  autoPlay = true,
-}: {
-  contract: string
-  tokenId: string
-  initialData?: NFTData
-  className?: string
-  style?: CSSProperties
-  darkMode?: boolean
-  autoPlay: boolean
-}) {
+  autoPlay,
+}: NFTEProps) {
   useStyleSheet(styles)
-
-  const [data, setData] = useState<NFTData | undefined>(initialData)
-  useEffect(() => {
-    if (initialData) return
-    async function fetchNftData() {
-      setData(undefined)
-      const r = await fetch(
-        `${API_HOST}/api/nft-data?contract=${contract}&tokenId=${tokenId}`
-      )
-
-      if (r.ok) {
-        const data = await r.json()
-        // console.log(data)
-        setData(data)
-      }
-    }
-
-    fetchNftData()
-  }, [contract, tokenId])
 
   if (!data) return <Loading style={style} />
 

@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "lerna": "lerna",
     "dev": "lerna run dev --parallel",
     "build": "lerna run build",
     "bump": "lerna version",
