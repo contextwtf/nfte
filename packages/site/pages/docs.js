@@ -118,8 +118,8 @@ export default function Docs() {
         <Box css={{ mb: "@4" }}>
           <Box css={{ fontWeight: 700, mb: "@1" }}>React</Box>
           <Box css={{ mb: "@1" }}>
-            Install with <InlineCode>npm i @nftmark/react</InlineCode> or{" "}
-            <InlineCode>yarn add @nftmark/react</InlineCode>
+            Install with <InlineCode>npm i @nfte/react</InlineCode> or{" "}
+            <InlineCode>yarn add @nfte/react</InlineCode>
           </Box>
           <CodeBlock code={`<NFTE contract="0x..." tokenId="1"/>`} />
         </Box>
