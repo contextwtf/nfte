@@ -1,4 +1,20 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
+
+const loopVideo = async (
+  media: string,
+  videoRef: React.MutableRefObject<HTMLVideoElement | null>
+) => {
+  const mediaSource = new MediaSource()
+  mediaSource.addEventListener("sourceopen", async function () {
+    var sourceBuffer = mediaSource.addSourceBuffer("video/mp4")
+
+    const res = await fetch(media)
+    const buffer = await res.arrayBuffer()
+    sourceBuffer.appendBuffer(buffer)
+  })
+  if (!videoRef.current) return
+  videoRef.current.src = URL.createObjectURL(mediaSource)
+}
 
 function Text({ media }: { media: string }) {
   const [content, setContent] = useState<string | null>(null)
@@ -17,8 +33,15 @@ function Text({ media }: { media: string }) {
 }
 
 function Video({ media, autoPlay }: { media: string; autoPlay: boolean }) {
+  const videoRef = useRef(null)
+  useEffect(() => {
+    if (!videoRef) return
+    loopVideo(media, videoRef)
+  }, [])
+
   return (
     <video
+      ref={videoRef}
       className="nfte__media-content"
       muted
       autoPlay={autoPlay}
@@ -26,7 +49,7 @@ function Video({ media, autoPlay }: { media: string; autoPlay: boolean }) {
       loop
       playsInline
     >
-      <source src={media} />
+      {/* <source src={media} /> */}
     </video>
   )
 }
