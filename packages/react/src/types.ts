@@ -1,5 +1,7 @@
 import { CSSProperties } from "react"
 
+export type Override<T1, T2> = Omit<T1, keyof T2> & T2
+
 export type NFTData = {
   contract: string
   tokenId: string

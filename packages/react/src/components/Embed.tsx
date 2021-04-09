@@ -6,7 +6,7 @@ import Loading from "../components/Loading"
 import useStyleSheet from "../hooks/useStyleSheet"
 import { toTrimmedAddress, isAddress, tsFormat, cx } from "../utils"
 
-import { NFTEProps } from "../types"
+import { NFTEProps, NFTData, Override } from "../types"
 
 import styles from "../styles.css"
 
@@ -118,7 +118,7 @@ export default function Embed({
   className,
   darkMode,
   autoPlay,
-}: NFTEProps) {
+}: Override<NFTEProps, { data?: NFTData }>) {
   useStyleSheet(styles)
 
   if (!data) return <Loading style={style} />
