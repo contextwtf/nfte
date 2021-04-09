@@ -27,7 +27,7 @@ export function NFTE({
   darkMode?: boolean
   autoPlay?: boolean
   apiUrl?: string
-  children: (props: {
+  children?: (props: {
     data: NFTData | undefined
     className?: string
     style?: CSSProperties
