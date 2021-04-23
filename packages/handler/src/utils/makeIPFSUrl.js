@@ -8,8 +8,5 @@ export default function makeIPFSUrl(
 
   const urlObject = new URL(url)
 
-  return `https://gateway.pinata.cloud/ipfs/${urlObject.pathname.replace(
-    /^\//,
-    ""
-  )}`
+  return `${ipfsHost}${urlObject.pathname.replace(/^\//, "")}`
 }
