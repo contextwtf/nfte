@@ -9,7 +9,7 @@ export default function makeIPFSUrl(
 
   const urlArray = url.split("/")
   const cidIndex = urlArray.findIndex((curr) => cid(curr))
-  const newCidPath = remove(urlArray, (n, i) => i >= cidIndex).join("/")
+  const newCidPath = remove(urlArray, (_, i) => i >= cidIndex).join("/")
 
   return `${ipfsHost}${newCidPath}`
 }
