@@ -17,8 +17,6 @@ export default [
   { contract: contracts.rarible, tokenId: "78177" },
   // Audio Ameer Suhayb Carter (Zora)
   { contract: contracts.zora, tokenId: "178" },
-  // Audio Ameer Suhayb Carter (Zora)
-  { contract: contracts.zora, tokenId: "178" },
   // David Porte Beckfield (Foundation)
   { contract: contracts.foundation, tokenId: "45" },
   // Sean Williams (Foundation)

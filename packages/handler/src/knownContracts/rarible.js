@@ -29,7 +29,11 @@ export default {
     const creatorOf = logs[0].args.to
     const blockNumber = logs[0].blockNumber
 
-    const metadataRes = await fetch(tokenURI.value)
+    const tokenURIConverted = isIPFS(tokenURI.value)
+      ? makeIPFSUrl(tokenURI.value, "https://ipfs.rarible.com/ipfs/")
+      : tokenURI.value
+
+    const metadataRes = await fetch(tokenURIConverted)
     const metadata = await metadataRes.json()
 
     const mediaUrl = isIPFS(metadata?.image)
@@ -45,9 +49,9 @@ export default {
       ownerOf: ownerOfAddress.value,
       ownerOfUrl: null,
       creatorOf: creatorOf,
-      creatorOfUrl: `https://app.rarible.com/user/${creatorOf}`,
+      creatorOfUrl: `https://rarible.com/user/${creatorOf}`,
       mediaUrl: mediaUrl,
-      mediaPageUrl: `https://app.rarible.com/token/${contractAddress}:${tokenId}`,
+      mediaPageUrl: `https://rarible.com/token/${contractAddress}:${tokenId}`,
       mediaMimeType,
       platform: "Rarible",
       platformUrl: "https://rarible.com",
