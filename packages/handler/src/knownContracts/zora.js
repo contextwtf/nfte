@@ -31,6 +31,25 @@ export default {
     const metadataRes = await fetch(metadataURI.value)
     const metadata = await metadataRes.json()
 
+    let catalogData = {}
+
+    if (metadata?.body) {
+      const {
+        mimeType: mediaMimeType,
+        title: name,
+        notes: description,
+        artwork,
+      } = data.metadata.body
+      
+      catalogData = {
+        mediaMimeType,
+        name,
+        description,
+        mediaMimeTypeSecondary: artwork.info.mimeType,
+        mediaUrlSecondary: artwork.info.uri,
+      }
+    }
+
     return {
       metadata,
       name: metadata?.name,
@@ -45,6 +64,7 @@ export default {
       platform: "Zora",
       platformUrl: "https://zora.co",
       blockNumber,
+      ...catalogData,
     }
   },
 }
