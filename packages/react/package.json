@@ -15,12 +15,13 @@
   "scripts": {
     "build": "microbundle -f es,cjs --jsx React.createElement --define API_HOST='https://nfte.app' --css inline",
     "dev": "microbundle watch -f es,cjs --jsx React.createElement --define API_HOST='http://localhost:3000' --css inline",
-    "prepare": "yarn build"
+    "prepare": "npm run build"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
+    "@types/react": "^17.0.19",
     "microbundle": "^0.13.0",
     "react": "^17.0.1"
   },

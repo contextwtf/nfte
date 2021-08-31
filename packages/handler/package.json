@@ -11,7 +11,7 @@
   "scripts": {
     "build": "microbundle -f es,cjs",
     "dev": "microbundle watch -f es,cjs",
-    "prepare": "yarn build"
+    "prepare": "npm run build"
   },
   "publishConfig": {
     "access": "public"
