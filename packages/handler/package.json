@@ -1,5 +1,5 @@
 {
-  "name": "@nfte/handler",
+  "name": "@lgt/nfte-handler",
   "version": "1.0.6",
   "description": "A function to allow you to self-host the api portion of NFTE in your own infrastructure.",
   "source": "src/index.js",
@@ -35,5 +35,6 @@
     "dapp",
     "ipfs",
     "erc-721"
-  ]
+  ],
+  "gitHead": "d1062c32db9a5e1f47127638b5bfad5c429c0aa9"
 }

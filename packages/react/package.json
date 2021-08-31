@@ -1,5 +1,5 @@
 {
-  "name": "@nfte/react",
+  "name": "@lgt/nfte-react",
   "version": "1.0.6",
   "description": "A React component for rendering NFT's in your app",
   "source": "src/index.ts",
@@ -38,5 +38,6 @@
     "dapp",
     "ipfs",
     "erc-721"
-  ]
+  ],
+  "gitHead": "d1062c32db9a5e1f47127638b5bfad5c429c0aa9"
 }
