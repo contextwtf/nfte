@@ -1,6 +1,6 @@
 {
   "name": "@lgt/nfte-react",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A React component for rendering NFT's in your app",
   "source": "src/index.ts",
   "main": "dist/react.js",
