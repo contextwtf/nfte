@@ -1,6 +1,5 @@
 import React from "react"
 
-import NFTIcon from "../components/NFTIcon"
 import Media from "../components/Media"
 import Loading from "../components/Loading"
 import useStyleSheet from "../hooks/useStyleSheet"
@@ -19,15 +18,11 @@ function NFT({
     description,
     ownerOf,
     ownerOfUrl,
-    creatorOf,
-    creatorOfUrl,
     platform,
     platformUrl,
     mediaUrl,
     mediaPageUrl,
     mediaMimeType,
-    blockNumber,
-    timestamp,
   },
   className,
   style,
@@ -44,23 +39,6 @@ function NFT({
       ])}
       style={style}
     >
-      <section className="pr1 pl1 pt0 pb0 nfte__header">
-        <div className="pr0 nfte__creator">
-          <p className="nfte__label">Created by</p>
-          <a target="_blank" href={creatorOfUrl} className="nfte__creator-id">
-            {isAddress(creatorOf) ? toTrimmedAddress(creatorOf) : creatorOf}
-          </a>
-        </div>
-
-        <div>
-          <a
-            href="https://foundation.app/blog/nfts-are-transforming-the-digital-art-world"
-            target="_blank"
-          >
-            <NFTIcon />
-          </a>
-        </div>
-      </section>
 
       {mediaUrl && mediaMimeType && (
         <section className="nfte__media">
@@ -90,15 +68,6 @@ function NFT({
           </a>
         </div>
 
-        <div className="pl1 pr1 nfte__single-meta">
-          <p className="nfte__label">Minted on</p>
-          <p
-            title={`Block number: ${blockNumber}`}
-            className="nfte__meta-content"
-          >
-            {tsFormat(timestamp)}
-          </p>
-        </div>
       </section>
 
       <a

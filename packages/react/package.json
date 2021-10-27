@@ -21,12 +21,15 @@
     "access": "public"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.176",
     "@types/react": "^17.0.19",
+    "lodash": "^4.17.20",
     "microbundle": "^0.13.0",
     "react": "^17.0.1"
   },
   "peerDependencies": {
-    "react": "^16.13.1 || ^17.x"
+    "react": "^16.13.1 || ^17.x",
+    "lodash": "^4.17.20"
   },
   "files": [
     "dist"
@@ -39,5 +42,11 @@
     "ipfs",
     "erc-721"
   ],
-  "gitHead": "d1062c32db9a5e1f47127638b5bfad5c429c0aa9"
+  "gitHead": "d1062c32db9a5e1f47127638b5bfad5c429c0aa9",
+  "dependencies": {
+    "ethers": "^5.5.1",
+    "is-ipfs": "^6.0.2",
+    "lodash": "^4.17.21",
+    "node-fetch": "^3.0.0"
+  }
 }

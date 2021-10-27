@@ -10,19 +10,11 @@ export type NFTData = {
   description: string
   ownerOf: string
   ownerOfUrl: string
-  creatorOf: string
-  creatorOfUrl: string
   platform: string
   platformUrl: string
   mediaUrl: string
   mediaPageUrl: string
   mediaMimeType?: string
-  blockNumber: string
-  timestamp: string
-  // Deprecated
-  media: string
-  mintedBy: string
-  mintedByUrl: string
 }
 
 export type NFTEProps = {
